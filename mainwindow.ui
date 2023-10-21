@@ -155,7 +155,7 @@ margin: 0 0 ;</string>
            </widget>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_8" stretch="3,2">
+           <layout class="QHBoxLayout" name="horizontalLayout_8" stretch="2,2">
             <property name="rightMargin">
              <number>0</number>
             </property>
@@ -185,7 +185,7 @@ margin: 0 0 ;</string>
                   <property name="styleSheet">
                    <string notr="true">color:white;
 font-weight:10000px;
-margin: 5px 5px ;</string>
+margin: 5px 0 ;</string>
                   </property>
                   <property name="text">
                    <string>Frequency</string>
@@ -262,7 +262,7 @@ QSpinBox::up-button:hover, QSpinBox::down-button:hover {
                   <property name="styleSheet">
                    <string notr="true">color:white;
 font-weight:10000px;
-margin: 5px 5px ;</string>
+margin: 5px 0 ;</string>
                   </property>
                   <property name="text">
                    <string>Amplitude</string>
@@ -342,7 +342,7 @@ QSpinBox::up-button:hover, QSpinBox::down-button:hover {
                   <property name="styleSheet">
                    <string notr="true">color:white;
 font-weight:10000px;
-margin: 5px 5px ;</string>
+margin: 5px 0 ;</string>
                   </property>
                   <property name="text">
                    <string>Phase</string>
@@ -484,6 +484,22 @@ background-color: #1c2973;
                <string>Add Component</string>
               </property>
              </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_3">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Maximum</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>22</height>
+               </size>
+              </property>
+             </spacer>
             </item>
             <item>
              <widget class="QPushButton" name="GenerateButton">
