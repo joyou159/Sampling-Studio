@@ -864,6 +864,9 @@ QListWidget::item:hover {
         <property name="leftMargin">
          <number>0</number>
         </property>
+        <property name="topMargin">
+         <number>10</number>
+        </property>
         <item>
          <widget class="PlotWidget" name="widget_3" native="true"/>
         </item>
