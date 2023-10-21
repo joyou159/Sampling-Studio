@@ -205,7 +205,7 @@ QSpinBox {
 	margin: 0 5px;
     font-weight: bold;
     font-size: 18px; /* Adjust font size */
-    text-align: inherit;
+    text-align: center;
 	height:20px; 
 }
 
@@ -230,7 +230,8 @@ QSpinBox::down-button {
 }
 
 QSpinBox::up-button:hover, QSpinBox::down-button:hover {
-    background-color: #ff5733; /* Change button color on hover */
+    background-color: #9fadfa; /* Change button color on hover */
+	 border-radius: 10px;
 }
 </string>
                   </property>
@@ -306,7 +307,8 @@ QSpinBox::down-button {
 }
 
 QSpinBox::up-button:hover, QSpinBox::down-button:hover {
-    background-color: #ff5733; /* Change button color on hover */
+    background-color: #9fadfa; /* Change button color on hover */
+	 border-radius: 10px;
 }
 </string>
                   </property>
@@ -385,7 +387,8 @@ QSpinBox::down-button {
 }
 
 QSpinBox::up-button:hover, QSpinBox::down-button:hover {
-    background-color: #ff5733; /* Change button color on hover */
+    background-color: #9fadfa; /* Change button color on hover */
+	 border-radius: 10px;
 }
 </string>
                   </property>
@@ -980,7 +983,7 @@ border-radius: 7px; /* Round the corners of the handle to make it into a circle 
 
 /* Style for the slider handle when pressed */
 QSlider::handle:pressed {
-background: darkend; /* Color of the handle when pressed */
+background: #992a27; /* Color of the handle when pressed */
 border: 1px solid #3498db; /* Border of the handle when pressed */
 }</string>
             </property>
@@ -1186,7 +1189,7 @@ border-radius: 7px; /* Round the corners of the handle to make it into a circle 
 
 /* Style for the slider handle when pressed */
 QSlider::handle:pressed {
-background: darkend; /* Color of the handle when pressed */
+background: #992a27; /* Color of the handle when pressed */
 border: 1px solid #3498db; /* Border of the handle when pressed */
 }</string>
                 </property>
