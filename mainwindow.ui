@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1330</width>
-    <height>831</height>
+    <width>1325</width>
+    <height>788</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,44 +17,19 @@
    <string notr="true">background-color: #242526;</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QGridLayout" name="gridLayout_2">
+   <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
-     <layout class="QGridLayout" name="gridLayout" columnstretch="1,5">
-      <property name="sizeConstraint">
-       <enum>QLayout::SetMinimumSize</enum>
-      </property>
-      <item row="0" column="0">
-       <layout class="QVBoxLayout" name="verticalLayout_7">
-        <property name="spacing">
+     <layout class="QHBoxLayout" name="horizontalLayout_9" stretch="2,0,4,0">
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout_5">
+        <property name="topMargin">
          <number>15</number>
         </property>
-        <property name="leftMargin">
-         <number>20</number>
-        </property>
-        <property name="topMargin">
-         <number>11</number>
-        </property>
         <property name="rightMargin">
-         <number>45</number>
+         <number>0</number>
         </property>
         <item>
-         <spacer name="verticalSpacer">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeType">
-           <enum>QSizePolicy::Maximum</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>13</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item>
-         <widget class="QPushButton" name="pushButton">
+         <widget class="QPushButton" name="uploadButton">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
             <horstretch>0</horstretch>
@@ -83,7 +58,7 @@
   font-size: 100%;
   height: 44px;
   line-height: 1.15;
-  margin: 0 0 20;
+
   outline: none;
   overflow: hidden;
   padding: 0 10px;
@@ -109,65 +84,135 @@ background-color: #1c2973;
          </widget>
         </item>
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout">
-          <property name="spacing">
-           <number>0</number>
+         <spacer name="verticalSpacer_7">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
           </property>
-          <property name="sizeConstraint">
-           <enum>QLayout::SetDefaultConstraint</enum>
+          <property name="sizeType">
+           <enum>QSizePolicy::Maximum</enum>
           </property>
-          <property name="rightMargin">
-           <number>17</number>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>20</height>
+           </size>
           </property>
+         </spacer>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_2">
           <item>
-           <layout class="QVBoxLayout" name="verticalLayout">
+           <widget class="QLabel" name="mixer">
+            <property name="font">
+             <font>
+              <family>Overpass Black</family>
+              <pointsize>-1</pointsize>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color:white;
+font-size:20px;
+margin: 0 0 ;</string>
+            </property>
+            <property name="text">
+             <string>Mixer</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Line" name="line_11">
+            <property name="styleSheet">
+             <string notr="true">/* Line style */
+
+  /* Set the width of the line */
+  width: 20px;
+
+  /* Set the height of the line */
+  height: 5px;
+
+  /* Set the background color of the line */
+  background-color: #3a3b3c;
+
+  /* Set the border of the line */
+  border: 10px;
+
+  /* Set the border radius of the line */
+  border-radius:5px;
+
+	margin: 0 0 0px 0;
+
+
+
+</string>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_8" stretch="3,2">
             <property name="rightMargin">
-             <number>12</number>
+             <number>0</number>
             </property>
             <item>
-             <widget class="QLabel" name="label_2">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-                <horstretch>9</horstretch>
-                <verstretch>15</verstretch>
-               </sizepolicy>
+             <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0">
+              <property name="spacing">
+               <number>0</number>
               </property>
-              <property name="font">
-               <font>
-                <family>Overpass Medium</family>
-                <pointsize>11</pointsize>
-               </font>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">color:white;
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0">
+                <item>
+                 <widget class="QLabel" name="Frequency">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Overpass SemiBold</family>
+                    <pointsize>11</pointsize>
+                    <bold>false</bold>
+                    <kerning>true</kerning>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">color:white;
 font-weight:10000px;
 margin: 5px 5px ;</string>
-              </property>
-              <property name="text">
-               <string>Frequency</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QSpinBox" name="spinBox_2">
-              <property name="styleSheet">
-               <string notr="true">/* QSpinBox */
+                  </property>
+                  <property name="text">
+                   <string>Frequency</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QSpinBox" name="freqSpinBox">
+                  <property name="enabled">
+                   <bool>true</bool>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">/* QSpinBox */
 QSpinBox {
     background-color: #f0f0f0; /* Light background color */
-    color: #3498db; /* Dark text color */
-    border: 2px solid #3498db; /* Add a border for a modern look */
+    color: #405cf5; /* Dark text color */
+    border: 2px solid #405cf5; /* Add a border for a modern look */
     border-radius: 10px; /* Slightly rounder corners */
-    padding: 3px 6px; /* Increase padding for spacing */
+    padding: 3px 8px; /* Increase padding for spacing */
 	margin: 0 5px;
     font-weight: bold;
     font-size: 18px; /* Adjust font size */
-    text-align: center;
+    text-align: inherit;
 	height:20px; 
 }
 
 /* QSpinBox Up Button (on the right) */
 QSpinBox::up-button {
-	image: url(:/icons/Icons/plus-circle-svgrepo-com (1).png);
+	
+	image: url(:/Icons/Icons/plus-circle.png);
     border-radius: 50%; /* Round button corners */
     width: 25px;
     height: 25px;
@@ -176,7 +221,8 @@ QSpinBox::up-button {
 
 /* QSpinBox Down Button (on the left) */
 QSpinBox::down-button {
-	image: url(:/icons/Icons/minus-circle-svgrepo-com.png);
+	
+	image: url(:/Icons/Icons/minus-circle.png);
     border-radius: 5px; /* Round button corners */
     width: 25px;
     height: 25px;
@@ -187,131 +233,49 @@ QSpinBox::up-button:hover, QSpinBox::down-button:hover {
     background-color: #ff5733; /* Change button color on hover */
 }
 </string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QVBoxLayout" name="verticalLayout_2">
-            <property name="spacing">
-             <number>6</number>
-            </property>
-            <property name="rightMargin">
-             <number>12</number>
-            </property>
-            <item>
-             <widget class="QLabel" name="label_3">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="font">
-               <font>
-                <family>Overpass Medium</family>
-                <pointsize>11</pointsize>
-               </font>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">color:white;
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_6">
+                <item>
+                 <widget class="QLabel" name="Amplitude">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Overpass SemiBold</family>
+                    <pointsize>11</pointsize>
+                    <bold>false</bold>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">color:white;
 font-weight:10000px;
 margin: 5px 5px ;</string>
-              </property>
-              <property name="text">
-               <string>Amplitude</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QSpinBox" name="spinBox">
-              <property name="styleSheet">
-               <string notr="true">/* QSpinBox */
+                  </property>
+                  <property name="text">
+                   <string>Amplitude</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QSpinBox" name="ampSpinBox">
+                  <property name="enabled">
+                   <bool>true</bool>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">/* QSpinBox */
 QSpinBox {
     background-color: #f0f0f0; /* Light background color */
-    color: #3498db; /* Dark text color */
-    border: 2px solid #3498db; /* Add a border for a modern look */
-    border-radius: 10px; /* Slightly rounder corners */
-    padding: 3px 6px; /* Increase padding for spacing */
-	margin: 0 5px;
-    font-weight: bold;
-    font-size: 18px; /* Adjust font size */
-    text-align: center;
-	height:20px; 
-}
-
-/* QSpinBox Up Button (on the right) */
-QSpinBox::up-button {
-	image: url(:/icons/Icons/plus-circle-svgrepo-com (1).png);
-    border-radius: 50%; /* Round button corners */
-    width: 25px;
-    height: 25px;
-    subcontrol-position: right; /* Place the up-button on the right */
-}
-
-/* QSpinBox Down Button (on the left) */
-QSpinBox::down-button {
-	image: url(:/icons/Icons/minus-circle-svgrepo-com.png);
-    border-radius: 5px; /* Round button corners */
-    width: 25px;
-    height: 25px;
-    subcontrol-position: left; /* Place the down-button on the left */
-}
-
-QSpinBox::up-button:hover, QSpinBox::down-button:hover {
-    background-color: #ff5733; /* Change button color on hover */
-}
-</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QVBoxLayout" name="verticalLayout_3">
-            <property name="spacing">
-             <number>6</number>
-            </property>
-            <property name="rightMargin">
-             <number>8</number>
-            </property>
-            <item>
-             <widget class="QLabel" name="label_4">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="font">
-               <font>
-                <family>Overpass SemiBold</family>
-                <pointsize>11</pointsize>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">color:white;
-font-weight:10000px;
-margin: 5px 5px ;</string>
-              </property>
-              <property name="text">
-               <string>Phase Shift </string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QSpinBox" name="spinBox_3">
-              <property name="enabled">
-               <bool>true</bool>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">/* QSpinBox */
-QSpinBox {
-    background-color: #f0f0f0; /* Light background color */
-    color: #3498db; /* Dark text color */
-    border: 2px solid #3498db; /* Add a border for a modern look */
+    color: #405cf5; /* Dark text color */
+    border: 2px solid #405cf5; /* Add a border for a modern look */
     border-radius: 10px; /* Slightly rounder corners */
     padding: 3px 8px; /* Increase padding for spacing */
 	margin: 0 5px;
@@ -323,7 +287,8 @@ QSpinBox {
 
 /* QSpinBox Up Button (on the right) */
 QSpinBox::up-button {
-	image: url(:/icons/Icons/plus-circle-svgrepo-com (1).png);
+	
+	image: url(:/Icons/Icons/plus-circle.png);
     border-radius: 50%; /* Round button corners */
     width: 25px;
     height: 25px;
@@ -332,7 +297,8 @@ QSpinBox::up-button {
 
 /* QSpinBox Down Button (on the left) */
 QSpinBox::down-button {
-	image: url(:/icons/Icons/minus-circle-svgrepo-com.png);
+	
+	image: url(:/Icons/Icons/minus-circle.png);
     border-radius: 5px; /* Round button corners */
     width: 25px;
     height: 25px;
@@ -343,22 +309,138 @@ QSpinBox::up-button:hover, QSpinBox::down-button:hover {
     background-color: #ff5733; /* Change button color on hover */
 }
 </string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_7">
+                <property name="spacing">
+                 <number>33</number>
+                </property>
+                <item>
+                 <widget class="QLabel" name="Phase">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Overpass SemiBold</family>
+                    <pointsize>11</pointsize>
+                    <bold>false</bold>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">color:white;
+font-weight:10000px;
+margin: 5px 5px ;</string>
+                  </property>
+                  <property name="text">
+                   <string>Phase</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QSpinBox" name="phaseSpinBox">
+                  <property name="enabled">
+                   <bool>true</bool>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">/* QSpinBox */
+QSpinBox {
+    background-color: #f0f0f0; /* Light background color */
+    color: #405cf5; /* Dark text color */
+    border: 2px solid #405cf5; /* Add a border for a modern look */
+    border-radius: 10px; /* Slightly rounder corners */
+    padding: 3px 8px; /* Increase padding for spacing */
+	margin: 0 5px;
+    font-weight: bold;
+    font-size: 18px; /* Adjust font size */
+    text-align: center;
+	height:20px; 
+}
+
+/* QSpinBox Up Button (on the right) */
+QSpinBox::up-button {
+	
+	image: url(:/Icons/Icons/plus-circle.png);
+    border-radius: 50%; /* Round button corners */
+    width: 25px;
+    height: 25px;
+    subcontrol-position: right; /* Place the up-button on the right */
+}
+
+/* QSpinBox Down Button (on the left) */
+QSpinBox::down-button {
+	
+	image: url(:/Icons/Icons/minus-circle.png);
+    border-radius: 5px; /* Round button corners */
+    width: 25px;
+    height: 25px;
+    subcontrol-position: left; /* Place the down-button on the left */
+}
+
+QSpinBox::up-button:hover, QSpinBox::down-button:hover {
+    background-color: #ff5733; /* Change button color on hover */
+}
+</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QListWidget" name="attrList">
+              <property name="styleSheet">
+               <string notr="true">QListWidget {
+    background-color: #4a4a4a; /* Background color of the list widget */
+    /*border: 1px solid #c0c0c0; /* Border color and width */
+    padding: 5px; /* Padding around the list items */
+	border-radius: 15px;
+}
+
+QListWidget::item {
+    background-color: #4a4a4a; /* Background color of each list item */
+    padding: 5px; /* Padding inside each list item */
+    border-bottom: 1px solid #c0c0c0; /* Separator between list items */
+    border-radius: 15px; /* Border radius for rounded corners */
+	color: #ffffff;
+}
+
+
+QListWidget::item:selected {
+    background-color: #3399ff; /* Background color of selected item */
+    color: #ffffff; /* Text color of selected item */
+}
+
+QListWidget::item:hover {
+    background-color: #e0e0e0; /* Background color when hovering over an item */
+}
+</string>
               </property>
              </widget>
             </item>
            </layout>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_2">
-            <property name="font">
-             <font>
-              <family>-apple-system</family>
-              <pointsize>11</pointsize>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QPushButton{
+           <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <item>
+             <widget class="QPushButton" name="addComponent">
+              <property name="font">
+               <font>
+                <family>-apple-system</family>
+                <pointsize>11</pointsize>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QPushButton{
   appearance: button;
   backface-visibility: hidden;
   background-color: #405cf5;
@@ -372,7 +454,7 @@ QSpinBox::up-button:hover, QSpinBox::down-button:hover {
   font-size: 100%;
   height: 35px;
   line-height: 1.15;
-  margin: 41 0 0 10;
+
   outline: none;
   overflow: hidden;
   padding: 0 5px;
@@ -391,29 +473,64 @@ QPushButton:pressed{
 background-color: #1c2973;
 }
 </string>
-            </property>
-            <property name="text">
-             <string>Add Signal</string>
-            </property>
-           </widget>
+              </property>
+              <property name="text">
+               <string>Add Component</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="GenerateButton">
+              <property name="font">
+               <font>
+                <family>-apple-system</family>
+                <pointsize>11</pointsize>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QPushButton{
+  appearance: button;
+  backface-visibility: hidden;
+  background-color: #405cf5;
+  border-radius: 6px;
+  border-width: 0;
+  box-shadow: rgba(50, 50, 93, .1) 0 0 0 1px inset,rgba(50, 50, 93, .1) 0 2px 5px 0,rgba(0, 0, 0, .07) 0 1px 1px 0;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  font-family: -apple-system,system-ui,&quot;Segoe UI&quot;,Roboto,&quot;Helvetica Neue&quot;,Ubuntu,sans-serif;
+  font-size: 100%;
+  height: 35px;
+  line-height: 1.15;
+
+  outline: none;
+  overflow: hidden;
+  padding: 0 5px;
+  position: relative;
+  text-align: center;
+  text-transform: none;
+  transform: translateZ(0);
+  transition: all .2s,box-shadow .08s ease-in;
+  touch-action: manipulation;
+  width:100px;
+}
+QPushButton:hover{
+background-color: #283999;
+}
+QPushButton:pressed{
+background-color: #1c2973;
+}
+</string>
+              </property>
+              <property name="text">
+               <string>Generate Signal</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
          </layout>
-        </item>
-        <item>
-         <spacer name="verticalSpacer_5">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeType">
-           <enum>QSizePolicy::Preferred</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>0</width>
-            <height>40</height>
-           </size>
-          </property>
-         </spacer>
         </item>
         <item>
          <widget class="Line" name="line_7">
@@ -445,21 +562,394 @@ background-color: #1c2973;
          </widget>
         </item>
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <spacer name="verticalSpacer_9">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Maximum</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_7">
+            <item>
+             <widget class="QLabel" name="Signals">
+              <property name="font">
+               <font>
+                <family>Overpass Black</family>
+                <pointsize>-1</pointsize>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">color:white;
+font-size:20px;
+margin: 0 0 ;</string>
+              </property>
+              <property name="text">
+               <string>Signals</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="Line" name="line_12">
+              <property name="styleSheet">
+               <string notr="true">/* Line style */
+
+  /* Set the width of the line */
+  width: 20px;
+
+  /* Set the height of the line */
+  height: 5px;
+
+  /* Set the background color of the line */
+  background-color: #3a3b3c;
+
+  /* Set the border of the line */
+  border: 10px;
+
+  /* Set the border radius of the line */
+  border-radius:5px;
+
+	margin: 0 0 0px 0;
+
+
+
+</string>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QListWidget" name="signalsList">
+              <property name="styleSheet">
+               <string notr="true">QListWidget {
+    background-color: #4a4a4a; /* Background color of the list widget */
+    /*border: 1px solid #c0c0c0; /* Border color and width */
+    padding: 5px; /* Padding around the list items */
+	border-radius: 15px;
+}
+
+QListWidget::item {
+    background-color: #4a4a4a; /* Background color of each list item */
+    padding: 5px; /* Padding inside each list item */
+    border-bottom: 1px solid #c0c0c0; /* Separator between list items */
+    border-radius: 15px; /* Border radius for rounded corners */
+	color: #ffffff;
+}
+
+
+QListWidget::item:selected {
+    background-color: #3399ff; /* Background color of selected item */
+    color: #ffffff; /* Text color of selected item */
+}
+
+QListWidget::item:hover {
+    background-color: #e0e0e0; /* Background color when hovering over an item */
+}
+</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="verticalSpacer_8">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Maximum</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>30</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_8">
+            <item>
+             <widget class="QLabel" name="Components">
+              <property name="font">
+               <font>
+                <family>Overpass Black</family>
+                <pointsize>-1</pointsize>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">color:white;
+font-size:20px;
+margin: 0 0 ;</string>
+              </property>
+              <property name="text">
+               <string>Components</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="Line" name="line_15">
+              <property name="styleSheet">
+               <string notr="true">/* Line style */
+
+  /* Set the width of the line */
+  width: 20px;
+
+  /* Set the height of the line */
+  height: 5px;
+
+  /* Set the background color of the line */
+  background-color: #3a3b3c;
+
+  /* Set the border of the line */
+  border: 10px;
+
+  /* Set the border radius of the line */
+  border-radius:5px;
+
+	margin: 0 0 0px 0;
+
+
+
+</string>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QListWidget" name="componList">
+              <property name="styleSheet">
+               <string notr="true">QListWidget {
+    background-color: #4a4a4a; /* Background color of the list widget */
+    /*border: 1px solid #c0c0c0; /* Border color and width */
+    padding: 5px; /* Padding around the list items */
+	border-radius: 15px;
+}
+
+QListWidget::item {
+    background-color: #4a4a4a; /* Background color of each list item */
+    padding: 5px; /* Padding inside each list item */
+    border-bottom: 1px solid #c0c0c0; /* Separator between list items */
+    border-radius: 15px; /* Border radius for rounded corners */
+	color: #ffffff;
+}
+
+
+QListWidget::item:selected {
+    background-color: #3399ff; /* Background color of selected item */
+    color: #ffffff; /* Text color of selected item */
+}
+
+QListWidget::item:hover {
+    background-color: #e0e0e0; /* Background color when hovering over an item */
+}
+</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="verticalSpacer_10">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Maximum</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>30</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_4">
           <property name="spacing">
-           <number>20</number>
-          </property>
-          <property name="sizeConstraint">
-           <enum>QLayout::SetDefaultConstraint</enum>
-          </property>
-          <property name="topMargin">
-           <number>0</number>
-          </property>
-          <property name="bottomMargin">
-           <number>37</number>
+           <number>4</number>
           </property>
           <item>
-           <widget class="QSlider" name="horizontalSlider">
+           <layout class="QHBoxLayout" name="horizontalLayout_4"/>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="Line" name="line_8">
+          <property name="styleSheet">
+           <string notr="true">/* Line style */
+
+  /* Set the width of the line */
+  width: 20px;
+
+  /* Set the height of the line */
+  height: 5px;
+
+  /* Set the background color of the line */
+  background-color: #3a3b3c;
+
+  /* Set the border of the line */
+  border: 10px;
+
+  /* Set the border radius of the line */
+  border-radius:5px;
+
+
+
+</string>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout_6">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="PlotWidget" name="widget_3" native="true"/>
+        </item>
+        <item>
+         <widget class="PlotWidget" name="widget" native="true"/>
+        </item>
+        <item>
+         <widget class="PlotWidget" name="widget_2" native="true"/>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout_13">
+        <property name="rightMargin">
+         <number>10</number>
+        </property>
+        <item>
+         <spacer name="verticalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Maximum</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>80</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QLabel" name="Noise">
+          <property name="font">
+           <font>
+            <family>Overpass Black</family>
+            <pointsize>-1</pointsize>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color:white;
+font-size:20px;
+margin: 0 0 ;</string>
+          </property>
+          <property name="text">
+           <string>Noise</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="Line" name="line_10">
+          <property name="styleSheet">
+           <string notr="true">/* Line style */
+
+  /* Set the width of the line */
+  width: 20px;
+
+  /* Set the height of the line */
+  height: 5px;
+
+  /* Set the background color of the line */
+  background-color: #3a3b3c;
+
+  /* Set the border of the line */
+  border: 10px;
+
+  /* Set the border radius of the line */
+  border-radius:5px;
+
+	margin: 0 0 0px 0;
+
+
+
+</string>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_12">
+          <item>
+           <widget class="QLabel" name="SNR">
+            <property name="font">
+             <font>
+              <family>Overpass SemiBold</family>
+              <pointsize>11</pointsize>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color:white;
+font-weight:10000px;
+margin-top: 3px;</string>
+            </property>
+            <property name="text">
+             <string>SNR</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QSlider" name="noiseSlider">
             <property name="styleSheet">
              <string notr="true">/* Style for the QSlider */
 
@@ -499,194 +989,15 @@ border: 1px solid #3498db; /* Border of the handle when pressed */
             </property>
            </widget>
           </item>
-          <item>
-           <widget class="QLabel" name="label_8">
-            <property name="font">
-             <font>
-              <family>Overpass SemiBold</family>
-              <pointsize>11</pointsize>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">color:white;
-font-weight:10000px;</string>
-            </property>
-            <property name="text">
-             <string>SNR</string>
-            </property>
-           </widget>
-          </item>
          </layout>
         </item>
         <item>
-         <spacer name="verticalSpacer_4">
+         <spacer name="verticalSpacer_5">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
           <property name="sizeType">
-           <enum>QSizePolicy::Preferred</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>40</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_3">
-          <item>
-           <widget class="QComboBox" name="comboBox">
-            <property name="styleSheet">
-             <string notr="true">QComboBox {
-  border-radius: 5px;
-  background-color: white;
-  color: black;
-height: 25px;
-}
-
-QComboBox::down-arrow {
-	image: url(:/icons/Icons/arrow-up-svgrepo-com.png);
-  width: 15px;
-  height: 15px;
-}
-
-QComboBox::down-arrow:hover {
-  background-color: lightgray;
-}
-
-QComboBox::drop-down {
-  background-color: white;
-  border: 1px solid lightgray;
-  border-radius: 5px;
-  color: black;
-}
-
-QComboBox::item {
-  background-color: white;
-  color: black;
-}
-
-QComboBox::item:hover {
-  background-color: lightgray;
-}
-
-QComboBox::item:selected {
-  background-color: darkgray;
-  color: white;
-}</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="pushButton_4">
-            <property name="font">
-             <font>
-              <family>-apple-system</family>
-              <pointsize>11</pointsize>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QPushButton{
-  appearance: button;
-  backface-visibility: hidden;
-  background-color: #405cf5;
-  border-radius: 6px;
-  border-width: 0;
-  box-shadow: rgba(50, 50, 93, .1) 0 0 0 1px inset,rgba(50, 50, 93, .1) 0 2px 5px 0,rgba(0, 0, 0, .07) 0 1px 1px 0;
-  box-sizing: border-box;
-  color: #fff;
-  cursor: pointer;
-  font-family: -apple-system,system-ui,&quot;Segoe UI&quot;,Roboto,&quot;Helvetica Neue&quot;,Ubuntu,sans-serif;
-  font-size: 100%;
-  height: 35px;
-  line-height: 1.15;
-  margin: 0 8 0 5 ;
-  outline: none;
-  overflow: hidden;
-  padding: 0 5px;
-  position: relative;
-  text-align: center;
-  text-transform: none;
-  transform: translateZ(0);
-  transition: all .2s,box-shadow .08s ease-in;
-  touch-action: manipulation;
-  width:80px;
-}
-QPushButton:hover{
-background-color: #283999;
-}
-QPushButton:pressed{
-background-color: #1c2973;
-}
-</string>
-            </property>
-            <property name="text">
-             <string>Delete</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="pushButton_5">
-            <property name="font">
-             <font>
-              <family>-apple-system</family>
-              <pointsize>11</pointsize>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QPushButton{
-  appearance: button;
-  backface-visibility: hidden;
-  background-color: #405cf5;
-  border-radius: 6px;
-  border-width: 0;
-  box-shadow: rgba(50, 50, 93, .1) 0 0 0 1px inset,rgba(50, 50, 93, .1) 0 2px 5px 0,rgba(0, 0, 0, .07) 0 1px 1px 0;
-  box-sizing: border-box;
-  color: #fff;
-  cursor: pointer;
-  font-family: -apple-system,system-ui,&quot;Segoe UI&quot;,Roboto,&quot;Helvetica Neue&quot;,Ubuntu,sans-serif;
-  font-size: 100%;
-  height: 35px;
-  line-height: 1.15;
-  margin: 0 0 0;
-  outline: none;
-  overflow: hidden;
-  padding: 0 5px;
-  position: relative;
-  text-align: center;
-  text-transform: none;
-  transform: translateZ(0);
-  transition: all .2s,box-shadow .08s ease-in;
-  touch-action: manipulation;
-  width:80px;
-}
-QPushButton:hover{
-background-color: #283999;
-}
-QPushButton:pressed{
-background-color: #1c2973;
-}
-</string>
-            </property>
-            <property name="text">
-             <string>Clear</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <spacer name="verticalSpacer_3">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeType">
-           <enum>QSizePolicy::Preferred</enum>
+           <enum>QSizePolicy::Maximum</enum>
           </property>
           <property name="sizeHint" stdset="0">
            <size>
@@ -697,7 +1008,26 @@ background-color: #1c2973;
          </spacer>
         </item>
         <item>
-         <widget class="Line" name="line_8">
+         <widget class="QLabel" name="Frequency_2">
+          <property name="font">
+           <font>
+            <family>Overpass Black</family>
+            <pointsize>-1</pointsize>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color:white;
+font-size:20px;
+margin: 0 0 ;</string>
+          </property>
+          <property name="text">
+           <string>Frequency</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="Line" name="line_9">
           <property name="styleSheet">
            <string notr="true">/* Line style */
 
@@ -716,6 +1046,8 @@ background-color: #1c2973;
   /* Set the border radius of the line */
   border-radius:5px;
 
+	margin: 0 0 0px 0;
+
 
 
 </string>
@@ -726,73 +1058,79 @@ background-color: #1c2973;
          </widget>
         </item>
         <item>
-         <layout class="QVBoxLayout" name="verticalLayout_5">
-          <property name="spacing">
-           <number>0</number>
+         <spacer name="verticalSpacer_11">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
           </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Maximum</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>5</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_11">
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_4">
-            <item>
-             <widget class="QRadioButton" name="radioButton">
-              <property name="font">
-               <font>
-                <family>Overpass SemiBold</family>
-                <pointsize>11</pointsize>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">color:white;
+           <widget class="QRadioButton" name="actualRadio">
+            <property name="font">
+             <font>
+              <family>Overpass SemiBold</family>
+              <pointsize>11</pointsize>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color:white;
 font-weight:10000px;</string>
-              </property>
-              <property name="text">
-               <string>Normailzed Sampling Freq</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QRadioButton" name="radioButton_2">
-              <property name="font">
-               <font>
-                <family>Overpass SemiBold</family>
-                <pointsize>11</pointsize>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">color:white;
-font-weight:10000px;</string>
-              </property>
-              <property name="text">
-               <string>Actual Sampling Freq</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
+            </property>
+            <property name="text">
+             <string>Actual Sampling Freq</string>
+            </property>
+           </widget>
           </item>
           <item>
-           <layout class="QVBoxLayout" name="verticalLayout_4">
-            <property name="spacing">
-             <number>4</number>
+           <widget class="QRadioButton" name="normalRadio">
+            <property name="font">
+             <font>
+              <family>Overpass SemiBold</family>
+              <pointsize>11</pointsize>
+              <bold>true</bold>
+             </font>
             </property>
+            <property name="styleSheet">
+             <string notr="true">color:white;
+font-weight:10000px;</string>
+            </property>
+            <property name="text">
+             <string>Normailzed Sampling Freq</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="verticalSpacer_6">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Maximum</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_10">
             <item>
-             <spacer name="verticalSpacer_6">
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-              <property name="sizeType">
-               <enum>QSizePolicy::Preferred</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>0</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
-             <widget class="QLabel" name="label_7">
+             <widget class="QLabel" name="fmaxLabel">
               <property name="font">
                <font>
                 <family>Overpass SemiBold</family>
@@ -803,7 +1141,7 @@ font-weight:10000px;</string>
               <property name="styleSheet">
                <string notr="true">color:white;
 font-weight:10000px;
-margin:0 0;</string>
+margin-top: 3px;</string>
               </property>
               <property name="text">
                <string>fmax</string>
@@ -814,9 +1152,11 @@ margin:0 0;</string>
              </widget>
             </item>
             <item>
-             <widget class="QSlider" name="horizontalSlider_2">
-              <property name="styleSheet">
-               <string notr="true">/* Style for the QSlider */
+             <layout class="QVBoxLayout" name="verticalLayout_9">
+              <item>
+               <widget class="QSlider" name="smapleSlider">
+                <property name="styleSheet">
+                 <string notr="true">/* Style for the QSlider */
 
 /* Background of the slider track */
 QSlider {
@@ -849,150 +1189,6 @@ QSlider::handle:pressed {
 background: darkend; /* Color of the handle when pressed */
 border: 1px solid #3498db; /* Border of the handle when pressed */
 }</string>
-              </property>
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="label_6">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>450</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <family>Overpass SemiBold</family>
-                <pointsize>11</pointsize>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="layoutDirection">
-               <enum>Qt::LeftToRight</enum>
-              </property>
-              <property name="autoFillBackground">
-               <bool>false</bool>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">color:white;
-font-weight:10000px;
-margin:0 0 0 0;</string>
-              </property>
-              <property name="frameShape">
-               <enum>QFrame::NoFrame</enum>
-              </property>
-              <property name="lineWidth">
-               <number>4</number>
-              </property>
-              <property name="text">
-               <string>20</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="label_5">
-              <property name="minimumSize">
-               <size>
-                <width>450</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <family>Overpass SemiBold</family>
-                <pointsize>11</pointsize>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">color:white;
-font-weight:10000px;
-margin:0 0;</string>
-              </property>
-              <property name="text">
-               <string>0</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="Line" name="line_10">
-              <property name="styleSheet">
-               <string notr="true">/* Line style */
-
-  /* Set the width of the line */
-  width: 20px;
-
-  /* Set the height of the line */
-  height: 5px;
-
-  /* Set the background color of the line */
-  background-color: #3a3b3c;
-
-  /* Set the border of the line */
-  border: 10px;
-
-  /* Set the border radius of the line */
-  border-radius:5px;
-
-
-
-</string>
-              </property>
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <spacer name="verticalSpacer_2">
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>20</width>
-                <height>40</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_5">
-              <item>
-               <widget class="Line" name="line_9">
-                <property name="styleSheet">
-                 <string notr="true">/* Line style */
-
-  /* Set the width of the line */
-  width: 20px;
-
-  /* Set the height of the line */
-  height: 5px;
-
-  /* Set the background color of the line */
-  background-color: #3a3b3c;
-
-  /* Set the border of the line */
-  border: 10px;
-
-  /* Set the border radius of the line */
-  border-radius:5px;
-
-
-
-</string>
                 </property>
                 <property name="orientation">
                  <enum>Qt::Horizontal</enum>
@@ -1000,26 +1196,70 @@ margin:0 0;</string>
                </widget>
               </item>
               <item>
-               <spacer name="horizontalSpacer">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>40</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
+               <layout class="QHBoxLayout" name="horizontalLayout_5">
+                <item>
+                 <widget class="QLabel" name="startLabel">
+                  <property name="font">
+                   <font>
+                    <family>Overpass Medium</family>
+                    <pointsize>10</pointsize>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">color:white;
+margin-top: 3px;</string>
+                  </property>
+                  <property name="text">
+                   <string>0</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="endLabel">
+                  <property name="font">
+                   <font>
+                    <family>Overpass Medium</family>
+                    <pointsize>10</pointsize>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">color:white;
+margin-top: 3px;</string>
+                  </property>
+                  <property name="text">
+                   <string>20</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
               </item>
              </layout>
+            </item>
+            <item>
+             <spacer name="verticalSpacer_4">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Maximum</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>30</height>
+               </size>
+              </property>
+             </spacer>
             </item>
            </layout>
           </item>
          </layout>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_6">
+         <widget class="QPushButton" name="downloadButton">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
             <horstretch>0</horstretch>
@@ -1051,7 +1291,7 @@ margin:0 0;</string>
   font-size: 100%;
   height: 44px;
   line-height: 1.15;
-  margin: 0 0 0;
+  margin: 0 0 0 25px;
   outline: none;
   overflow: hidden;
   padding: 0 10px;
@@ -1077,7 +1317,7 @@ background-color: #1c2973;
          </widget>
         </item>
         <item>
-         <spacer name="verticalSpacer_7">
+         <spacer name="verticalSpacer_3">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
@@ -1091,31 +1331,6 @@ background-color: #1c2973;
         </item>
        </layout>
       </item>
-      <item row="0" column="1">
-       <layout class="QVBoxLayout" name="verticalLayout_6">
-        <item>
-         <widget class="QWidget" name="widget" native="true">
-          <property name="styleSheet">
-           <string notr="true">background-color:black;</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QWidget" name="widget_2" native="true">
-          <property name="styleSheet">
-           <string notr="true">background-color:black;</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QWidget" name="widget_3" native="true">
-          <property name="styleSheet">
-           <string notr="true">background-color:black;</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
      </layout>
     </item>
    </layout>
@@ -1125,13 +1340,21 @@ background-color: #1c2973;
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1330</width>
+     <width>1325</width>
      <height>22</height>
     </rect>
    </property>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>PlotWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">pyqtgraph</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="resources.qrc"/>
  </resources>
