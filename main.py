@@ -193,12 +193,17 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def delete_from_componList(self, component):
         self.current_signal.delete_component_after_preparing(component)
-        self.update_componList()
+        print(self.current_signal.components)
+        if self.current_signal.components == []:
+            self.delete_from_signalsList(self.current_signal)
+
+        else:
+            self.update_componList()
 
     def update_componList(self):
         self.ui.componList.clear()
         for component in self.current_signal.components:
-            self.add_to_componList(component)
+            self.add_to_componList()
 
 
 def main():
