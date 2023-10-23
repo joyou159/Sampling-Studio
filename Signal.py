@@ -7,6 +7,7 @@ class Signal:
         self.name = name
         self.components = []
         self.data = []
+        self.time = np.linspace(0, 1, 1000)
 
         self.snr = None
         self.sample_rate = None
@@ -27,12 +28,12 @@ class Signal:
         self.generate_samples()
 
     def generate_samples(self):
-        time = np.linspace(0, 1, 1000)
+        
 
         # Initialize self.samples as an empty array with the same shape
-        self.data = np.zeros(time.shape)
+        self.data = np.zeros(self.time.shape)
 
         # Generate the signal samples for each component and add them
         for component in self.components:
             self.data += component.amplitude * \
-                np.sin(2 * np.pi * component.frequency * time + component.phase)
+                np.sin(2 * np.pi * component.frequency * self.time + component.phase)

@@ -1,6 +1,7 @@
 <RCC>
   <qresource prefix="Icons">
-    <file>Icons/arrow-up-svgrepo-com.png</file>
+    <file>Icons/save-svgrepo-com.png</file>
+    <file>Icons/upload-square-svgrepo-com.png</file>
     <file>Icons/minus-circle.png</file>
     <file>Icons/plus-circle.png</file>
   </qresource>

@@ -39,6 +39,88 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui.GenerateButton.clicked.connect(self.generate_mixer)
         self.ui.signalsList.itemSelectionChanged.connect(
             self.handle_selected_signal)
+        self.ui.uploadButton.clicked.connect(self.browse)
+        
+
+    def browse(self):
+        file_filter = "Raw Data (*.csv)"
+        file_path, _ = QtWidgets.QFileDialog.getOpenFileName(
+            None, 'Open Signal File', './', filter=file_filter)
+        
+        if file_path:
+            self.open_file(file_path)
+    
+
+    def open_file(self, path: str):
+        time = []
+        data = []
+        # Initialize the sampling frequency
+        self.fsampling = 1
+
+        # Extract the file extension (last 3 characters) from the path
+        filetype = path[-3:]
+
+        # Check if the file type is CSV, text (txt), or Excel (xls)
+        if filetype in ["csv", "txt", "xls"]:
+            # Open the data file for reading ('r' mode)
+            with open(path, 'r') as data_file:
+                # Create a CSV reader object with comma as the delimiter
+                data_reader = csv.reader(data_file, delimiter=',')
+
+                # Iterate through each row (line) in the data file
+                for row in data_reader:
+                    # Extract the time value from the first column (index 0)
+                    time_value = float(row[0])
+
+                    # Extract the amplitude value from the second column (index 1)
+                    amplitude_value = float(row[1])
+
+                    # Append the time and amplitude values to respective lists
+                    time.append(time_value)
+                    data.append(amplitude_value)
+        
+        signal = Signal("signal")
+        signal.time = time
+        signal.data = data
+        self.plot_mixed_signals(signal)
+
+
+    def sample_and_reconstruct(self, continuous_signal, original_time, sampling_rate):
+
+        self.ui.graph2.clear()
+        # Sample the continuous signal
+        sampled_time = np.arange(0, original_time[-1], 1.0 / sampling_rate)
+        sampled_signal = np.interp(sampled_time, original_time, continuous_signal)
+
+        # Reconstruct the signal using linear interpolation
+        reconstructed_signal = np.interp(original_time, sampled_time, sampled_signal)
+
+
+        # Create a plot item
+
+        self.ui.graph2.setLabel('left', "Amplitude")
+        self.ui.graph2.setLabel('bottom', "Time")
+
+        # Plot the reconstructed signal
+        self.ui.graph2.plot(original_time, reconstructed_signal, pen='r', name="Reconstructed Signal")
+
+
+    def plot_mixed_signals(self, signal):
+        self.ui.graph1.clear()
+
+        # Create a plot item
+        self.ui.graph1.setLabel('left', "Amplitude")
+        self.ui.graph1.setLabel('bottom', "Time")
+
+        # Initialize the time axis (assuming all signals have the same time axis)
+        x_data = signal.time
+        
+        y_data = signal.data
+
+        # Plot the mixed waveform
+        self.ui.graph1.plot(x_data, y_data, name=signal.name)
+        self.ui.graph1.setLimits(xMin = 0, xMax =1)
+
 
     def add_component(self):
 
@@ -57,6 +139,8 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.preparing_signal.add_component(component)
         self.add_to_attrList(component)
+        # self.plot_signal(self.preparing_signal)
+
 
     def generate_mixer(self):
         if self.preparing_signal is not None:
@@ -64,6 +148,16 @@ class MainWindow(QtWidgets.QMainWindow):
             self.ui.attrList.clear()
             self.add_to_signalsList(self.preparing_signal)
             self.preparing_signal = None
+
+        # Select the last row in signalsList
+        last_row = len(self.signals) - 1
+        if last_row >= 0:
+            self.ui.signalsList.setCurrentRow(last_row)
+
+        self.current_signal = self.signals[-1]
+        self.plot_mixed_signals(self.current_signal)
+
+        
 
     def add_to_attrList(self, component):
 
@@ -73,9 +167,12 @@ class MainWindow(QtWidgets.QMainWindow):
         layout = QHBoxLayout()
 
         label = QLabel(text)
+        label.setStyleSheet("color:white")
+
         icon_button = QPushButton()
         # Set the path to your icon file
         icon_button.setIcon(QIcon("Icons/delete-svgrepo-com.svg"))
+        icon_button.setStyleSheet("background-color:transparent")
         icon_button.clicked.connect(
             lambda: self.delete_from_attrList(component))
 
@@ -94,9 +191,11 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui.ampSpinBox.setValue(0)
         self.ui.phaseSpinBox.setValue(0)
 
+
     def delete_from_attrList(self, component):
         self.preparing_signal.delete_component_during_preparing(component)
         self.update_attrList()
+
 
     def update_attrList(self):
         self.ui.attrList.clear()
@@ -111,9 +210,11 @@ class MainWindow(QtWidgets.QMainWindow):
         layout = QHBoxLayout()
 
         label = QLabel(text)
+        label.setStyleSheet("color:white")
         icon_button = QPushButton()
         # Set the path to your icon file
         icon_button.setIcon(QIcon("Icons/delete-svgrepo-com.svg"))
+        icon_button.setStyleSheet("background-color:transparent")
         icon_button.clicked.connect(
             lambda: self.delete_from_signalsList(signal))
 
@@ -127,6 +228,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui.signalsList.addItem(item)
         self.ui.signalsList.setItemWidget(item, custom_widget)
 
+
     def delete_from_signalsList(self, signal):
         for sig in self.signals:
             if signal == sig:
@@ -136,12 +238,14 @@ class MainWindow(QtWidgets.QMainWindow):
                 self.signals.remove(signal)
         self.update_signalsList()
 
+
     def update_signalsList(self):
         current_item = self.ui.signalsList.currentRow()
         self.ui.signalsList.clear()
         for signal in self.signals:
             self.add_to_signalsList(signal)
         self.ui.signalsList.setCurrentRow(current_item)
+
 
     def add_to_componList(self):
         self.ui.componList.clear()
@@ -151,9 +255,11 @@ class MainWindow(QtWidgets.QMainWindow):
             layout = QHBoxLayout()
 
             label = QLabel(text)
+            label.setStyleSheet("color:white")
             icon_button = QPushButton()
             # Set the path to your icon file
             icon_button.setIcon(QIcon("Icons/delete-svgrepo-com.svg"))
+            icon_button.setStyleSheet("background-color:transparent")
             icon_button.clicked.connect(
                 lambda: self.delete_from_componList(component))
 
@@ -186,8 +292,9 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def handle_selected_signal(self):
         selected_signal = self.get_selected_signal()
-
         self.current_signal = selected_signal
+        self.ui.graph1.clear()
+        self.plot_mixed_signals(self.current_signal)
         if self.current_signal:
             self.add_to_componList()
 

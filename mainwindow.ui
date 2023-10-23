@@ -71,7 +71,7 @@
   transform: translateZ(0);
   transition: all .2s,box-shadow .08s ease-in;
   touch-action: manipulation;
-  width:130px;
+  width:155px;
 }
 QPushButton:hover{
 background-color: #283999;
@@ -83,6 +83,16 @@ background-color: #1c2973;
           </property>
           <property name="text">
            <string>Upload File</string>
+          </property>
+          <property name="icon">
+           <iconset resource="resources.qrc">
+            <normaloff>:/Icons/Icons/upload-square-svgrepo-com.png</normaloff>:/Icons/Icons/upload-square-svgrepo-com.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>25</width>
+            <height>25</height>
+           </size>
           </property>
          </widget>
         </item>
@@ -205,17 +215,19 @@ QSpinBox {
     border: 2px solid #405cf5; /* Add a border for a modern look */
     border-radius: 10px; /* Slightly rounder corners */
     padding: 3px 8px; /* Increase padding for spacing */
+	padding-left: 15px;
 	margin: 0 5px;
     font-weight: bold;
     font-size: 18px; /* Adjust font size */
     text-align: center;
 	height:20px; 
+width: 50px;
 }
 
 /* QSpinBox Up Button (on the right) */
 QSpinBox::up-button {
 	
-	image: url(:/Icons/Icons/plus-circle.png);
+	image: url(Icons/plus-circle.png);
     border-radius: 50%; /* Round button corners */
     width: 25px;
     height: 25px;
@@ -225,7 +237,7 @@ QSpinBox::up-button {
 /* QSpinBox Down Button (on the left) */
 QSpinBox::down-button {
 	
-	image: url(:/Icons/Icons/minus-circle.png);
+	image: url(Icons/minus-circle.png);
     border-radius: 5px; /* Round button corners */
     width: 25px;
     height: 25px;
@@ -282,17 +294,19 @@ QSpinBox {
     border: 2px solid #405cf5; /* Add a border for a modern look */
     border-radius: 10px; /* Slightly rounder corners */
     padding: 3px 8px; /* Increase padding for spacing */
+	padding-left: 15px;
 	margin: 0 5px;
     font-weight: bold;
     font-size: 18px; /* Adjust font size */
     text-align: center;
 	height:20px; 
+width: 50px;
 }
 
 /* QSpinBox Up Button (on the right) */
 QSpinBox::up-button {
 	
-	image: url(:/Icons/Icons/plus-circle.png);
+	image: url(Icons/plus-circle.png);
     border-radius: 50%; /* Round button corners */
     width: 25px;
     height: 25px;
@@ -302,7 +316,7 @@ QSpinBox::up-button {
 /* QSpinBox Down Button (on the left) */
 QSpinBox::down-button {
 	
-	image: url(:/Icons/Icons/minus-circle.png);
+	image: url(Icons/minus-circle.png);
     border-radius: 5px; /* Round button corners */
     width: 25px;
     height: 25px;
@@ -362,17 +376,19 @@ QSpinBox {
     border: 2px solid #405cf5; /* Add a border for a modern look */
     border-radius: 10px; /* Slightly rounder corners */
     padding: 3px 8px; /* Increase padding for spacing */
+	padding-left: 15px;
 	margin: 0 5px;
     font-weight: bold;
     font-size: 18px; /* Adjust font size */
     text-align: center;
 	height:20px; 
+width: 50px;
 }
 
 /* QSpinBox Up Button (on the right) */
 QSpinBox::up-button {
 	
-	image: url(:/Icons/Icons/plus-circle.png);
+	image: url(Icons/plus-circle.png);
     border-radius: 50%; /* Round button corners */
     width: 25px;
     height: 25px;
@@ -382,7 +398,7 @@ QSpinBox::up-button {
 /* QSpinBox Down Button (on the left) */
 QSpinBox::down-button {
 	
-	image: url(:/Icons/Icons/minus-circle.png);
+	image: url(Icons/minus-circle.png);
     border-radius: 5px; /* Round button corners */
     width: 25px;
     height: 25px;
@@ -853,7 +869,7 @@ QListWidget::item:hover {
         </property>
         <property name="sizeHint" stdset="0">
          <size>
-          <width>40</width>
+          <width>25</width>
           <height>20</height>
          </size>
         </property>
@@ -868,13 +884,13 @@ QListWidget::item:hover {
          <number>10</number>
         </property>
         <item>
-         <widget class="PlotWidget" name="widget_3" native="true"/>
+         <widget class="PlotWidget" name="graph1" native="true"/>
         </item>
         <item>
-         <widget class="PlotWidget" name="widget" native="true"/>
+         <widget class="PlotWidget" name="graph2" native="true"/>
         </item>
         <item>
-         <widget class="PlotWidget" name="widget_2" native="true"/>
+         <widget class="PlotWidget" name="graph3" native="true"/>
         </item>
        </layout>
       </item>
@@ -885,7 +901,7 @@ QListWidget::item:hover {
         </property>
         <property name="sizeHint" stdset="0">
          <size>
-          <width>40</width>
+          <width>25</width>
           <height>20</height>
          </size>
         </property>
@@ -976,7 +992,7 @@ margin: 0 0 ;</string>
             <property name="styleSheet">
              <string notr="true">color:white;
 font-weight:10000px;
-margin-top: 3px;</string>
+margin-top: 7px;</string>
             </property>
             <property name="text">
              <string>SNR</string>
@@ -1339,7 +1355,7 @@ margin-top: 3px;</string>
   transform: translateZ(0);
   transition: all .2s,box-shadow .08s ease-in;
   touch-action: manipulation;
-  width:145px;
+  width:140px;
 }
 QPushButton:hover{
 background-color: #283999;
@@ -1350,7 +1366,17 @@ background-color: #1c2973;
 </string>
           </property>
           <property name="text">
-           <string>Download File</string>
+           <string>Save File</string>
+          </property>
+          <property name="icon">
+           <iconset resource="resources.qrc">
+            <normaloff>:/Icons/Icons/save-svgrepo-com.png</normaloff>:/Icons/Icons/save-svgrepo-com.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>30</width>
+            <height>27</height>
+           </size>
           </property>
          </widget>
         </item>
