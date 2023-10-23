@@ -107,23 +107,25 @@ class MainWindow(QtWidgets.QMainWindow):
 
 
     def plot_mixed_signals(self, signal):
-        self.ui.graph1.clear()
+        if signal:
+            self.ui.graph1.clear()
 
-        # Create a plot item
-        self.ui.graph1.setLabel('left', "Amplitude")
-        self.ui.graph1.setLabel('bottom', "Time")
+            # Create a plot item
+            self.ui.graph1.setLabel('left', "Amplitude")
+            self.ui.graph1.setLabel('bottom', "Time")
 
-        # Initialize the time axis (assuming all signals have the same time axis)
-        x_data = signal.time
-        
-        y_data = signal.data
+            # Initialize the time axis (assuming all signals have the same time axis)
+            x_data = signal.time
+            
+            y_data = signal.data
 
-        # Plot the mixed waveform
-        self.ui.graph1.plot(x_data, y_data, name=signal.name)
+            # Plot the mixed waveform
+            self.ui.graph1.plot(x_data, y_data, name=signal.name)
 
-        if not self.time:
-            self.ui.graph1.setLimits(xMin = 0, xMax =1)
- 
+            if not self.time:
+                self.ui.graph1.setLimits(xMin = 0, xMax =1)
+        else:
+            self.ui.graph1.clear()
 
 
     def add_component(self):
@@ -135,7 +137,8 @@ class MainWindow(QtWidgets.QMainWindow):
         component = Components(frequency, amplitude, phase)
 
         if self.preparing_signal is None:
-            signal = Signal(f"Signal {len(self.signals)}")
+            name = f"Signal {len(self.signals)}"
+            signal = Signal(name)
             self.signals.append(signal)
             self.preparing_signal = signal
             if len(self.signals) == 1:
@@ -304,6 +307,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def delete_from_componList(self, component):
         self.current_signal.delete_component_after_preparing(component)
+        self.handle_selected_signal()
         print(self.current_signal.components)
         if self.current_signal.components == []:
             self.delete_from_signalsList(self.current_signal)
