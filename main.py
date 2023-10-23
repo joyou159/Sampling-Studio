@@ -27,6 +27,8 @@ class MainWindow(QtWidgets.QMainWindow):
 
         # Signals objects
         self.signals = []
+        self.time = []
+        self.data = []
         self.current_signal = None
         self.preparing_signal = None
         self.init_ui()
@@ -52,8 +54,7 @@ class MainWindow(QtWidgets.QMainWindow):
     
 
     def open_file(self, path: str):
-        time = []
-        data = []
+
         # Initialize the sampling frequency
         self.fsampling = 1
 
@@ -76,12 +77,12 @@ class MainWindow(QtWidgets.QMainWindow):
                     amplitude_value = float(row[1])
 
                     # Append the time and amplitude values to respective lists
-                    time.append(time_value)
-                    data.append(amplitude_value)
-        
+                    self.time.append(time_value)
+                    self.data.append(amplitude_value)
+
         signal = Signal("signal")
-        signal.time = time
-        signal.data = data
+        signal.time = self.time
+        signal.data = self.data
         self.plot_mixed_signals(signal)
 
 
@@ -119,7 +120,10 @@ class MainWindow(QtWidgets.QMainWindow):
 
         # Plot the mixed waveform
         self.ui.graph1.plot(x_data, y_data, name=signal.name)
-        self.ui.graph1.setLimits(xMin = 0, xMax =1)
+
+        if not self.time:
+            self.ui.graph1.setLimits(xMin = 0, xMax =1)
+ 
 
 
     def add_component(self):
