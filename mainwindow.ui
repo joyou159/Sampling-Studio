@@ -1208,7 +1208,7 @@ margin-top: 3px;</string>
             <item>
              <layout class="QVBoxLayout" name="verticalLayout_9">
               <item>
-               <widget class="QSlider" name="smapleSlider">
+               <widget class="QSlider" name="sampleSlider">
                 <property name="styleSheet">
                  <string notr="true">/* Style for the QSlider */
 
@@ -1405,7 +1405,7 @@ background-color: #1c2973;
      <x>0</x>
      <y>0</y>
      <width>1325</width>
-     <height>22</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>
