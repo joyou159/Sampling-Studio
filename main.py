@@ -96,7 +96,7 @@ class MainWindow(QtWidgets.QMainWindow):
         signal.time = time
         signal.data = data
         self.current_signal = signal
-        self.set_sliders ()
+        # self.set_sliders ()
         self.plot_mixed_signals(signal)
 
 
@@ -368,9 +368,9 @@ class MainWindow(QtWidgets.QMainWindow):
             self.sampleSlider.setValue(int(self.current_signal.sample_rate)) # handle_sliders is called() due to the connection, and i want to suppress this calling 
         else:
             self.ui.normalRadio.setChecked(True)
-            self.ui.sampleSlider.setMinimum(1)
+            self.ui.sampleSlider.setMinimum(self.current_signal.maxFreq)
             self.ui.sampleSlider.setMaximum(int(self.current_signal.maxFreq * 4)) 
-            self.ui.startLabel.setText("1")
+            self.ui.startLabel.setText("1 x Max freq")
             self.ui.endLabel.setText(f"4 x Max freq")
             self.sampleSlider.setSingleStep(int(self.current_signal.maxFreq))
             self.sampleSlider.setValue(int(self.current_signal.sample_rate))

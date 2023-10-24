@@ -5,9 +5,9 @@ import numpy as np
 class Signal:
     def __init__(self, name):
         self.name = name
-        self.components = []
+        self.components = [] 
         self.data = [] 
-        self.time = np.linspace(0, 1, 1000) 
+        self.time = np.linspace(0, 1, 1000)   
 
         self.snr = None
         self.sample_rate = None
