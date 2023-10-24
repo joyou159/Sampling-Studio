@@ -360,6 +360,7 @@ class MainWindow(QtWidgets.QMainWindow):
         if self.current_signal == None:
             return 
         elif self.current_signal.sampling_mode == 0:
+            self.ui.fmaxLabel.setText("4Fmax")
             self.ui.actualRadio.setChecked(True)
             self.ui.sampleSlider.setMinimum(1)
             self.ui.sampleSlider.setMaximum(int(self.current_signal.maxFreq * 4)) 
@@ -368,6 +369,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.sampleSlider.setSingleStep(1)
             self.sampleSlider.setValue(int(self.current_signal.sample_rate)) # handle_sliders is called() due to the connection, and i want to suppress this calling 
         else:
+            self.ui.fmaxLabel.setText("")
             self.ui.normalRadio.setChecked(True)
             self.ui.sampleSlider.setMinimum(self.current_signal.maxFreq)
             self.ui.sampleSlider.setMaximum(self.current_signal.maxFreq * 4) 
@@ -381,10 +383,10 @@ class MainWindow(QtWidgets.QMainWindow):
     def updateCurrentValueLabel(self):
         current_value = self.ui.sampleSlider.value()
         if self.current_signal.sampling_mode == 0:
-            self.ui.fmaxLabel.setText("4Fmax")
+            
             self.ui.indicatLabel.setText(f"Current Value: {current_value}")
         else:
-            self.ui.fmaxLabel.setText("")
+            
             self.ui.indicatLabel.setText(f"Current Value: {current_value // self.current_signal.maxFreq}F_max")
              
 
