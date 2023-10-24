@@ -127,26 +127,26 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui.graph2.setLimits(yMin = min(interpolated_data)-1, yMax =max(interpolated_data)+1)
 
 
+    def plot_mixed_signals(self, signal):
+        if signal:
+            self.ui.graph1.clear()
 
-    def plot_mixed_signals(self, signal):   
-        self.ui.graph1.clear()
+            # Create a plot item
+            self.ui.graph1.setLabel('left', "Amplitude")
+            self.ui.graph1.setLabel('bottom', "Time")
 
-        # Create a plot item
-        self.ui.graph1.setLabel('left', "Amplitude")
-        self.ui.graph1.setLabel('bottom', "Time")
-
-        # Initialize the time axis (assuming all signals have the same time axis)
-        x_data = signal.time
-        
-        y_data = signal.data
+            # Initialize the time axis (assuming all signals have the same time axis)
+            x_data = signal.time
+            
+            y_data = signal.data
 
         # Plot the mixed waveform
-        self.ui.graph1.plot(x_data, y_data, name=signal.name)
-        self.ui.graph1.setLimits(yMin = min(y_data)-1, yMax =max(y_data)+1)
-        
-        # handling plot in graph2
-        self.sample_and_reconstruct(signal) 
- 
+            self.ui.graph1.plot(x_data, y_data, name=signal.name)
+            self.ui.graph1.setLimits(yMin = min(y_data)-1, yMax =max(y_data)+1)
+            
+            # handling plot in graph2
+            self.sample_and_reconstruct(signal) 
+    
 
 
     def add_component(self):
@@ -157,7 +157,8 @@ class MainWindow(QtWidgets.QMainWindow):
         component = Components(frequency, amplitude, phase)
 
         if self.preparing_signal is None:
-            signal = Signal(f"Signal {len(self.signals)}")
+            name = f"Signal {len(self.signals)}"
+            signal = Signal(name)
             self.signals.append(signal)
             self.preparing_signal = signal
             # what is the meaning of this ??
@@ -329,6 +330,8 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def delete_from_componList(self, component):
         self.current_signal.delete_component_after_preparing(component)
+        self.handle_selected_signal()
+        print(self.current_signal.components)
         if self.current_signal.components == []:
             self.delete_from_signalsList(self.current_signal)
 
@@ -353,7 +356,9 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def set_sliders(self):
         self.sliders_init = True
-        if self.current_signal.sampling_mode == 0:
+        if self.current_signal == None:
+            return 
+        elif self.current_signal.sampling_mode == 0:
             self.ui.actualRadio.setChecked(True)
             self.ui.sampleSlider.setMinimum(1)
             self.ui.sampleSlider.setMaximum(int(self.current_signal.maxFreq * 4)) 
