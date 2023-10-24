@@ -13,6 +13,7 @@ import os
 import random
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QShortcut, QKeySequence, QIcon
+import pandas as pd
 
 
 from Signal import Signal
@@ -53,6 +54,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui.sampleSlider.valueChanged.connect(self.handle_sliders)
         self.ui.actualRadio.toggled.connect(self.radioToggled)
         self.ui.normalRadio.toggled.connect(self.radioToggled)
+        self.ui.downloadButton.clicked.connect(self.download_signal)
 
         # there is a function called update_sliders() that can be used with Noise slider as well 
         
@@ -376,19 +378,14 @@ class MainWindow(QtWidgets.QMainWindow):
             self.ui.startLabel.setText("Max freq")
             self.ui.endLabel.setText(f"4 Max freq")
             self.ui.sampleSlider.setSingleStep(self.current_signal.maxFreq)
-            # self.sampleSlider.setSingleStep(int(self.current_signal.maxFreq))
-            # self.sampleSlider.setValue(int(self.current_signal.sample_rate))
 
 
     def updateCurrentValueLabel(self):
         current_value = self.ui.sampleSlider.value()
         if self.current_signal.sampling_mode == 0:
-            
             self.ui.indicatLabel.setText(f"Current Value: {current_value}")
         else:
-            
             self.ui.indicatLabel.setText(f"Current Value: {current_value // self.current_signal.maxFreq}F_max")
-             
 
     def radioToggled(self):
         if self.ui.actualRadio.isChecked():
@@ -398,6 +395,19 @@ class MainWindow(QtWidgets.QMainWindow):
             self.current_signal.change_sampling_mode(1)
             self.set_sliders()
         
+
+    def download_signal(self):
+        self.folder_path, _ = QFileDialog.getSaveFileName(
+            None, 'Save the signal file', None, 'CSV Files (*.csv)')  # Use .csv extension for CSV files
+        
+        signal = self.current_signal
+        df = pd.DataFrame({"Y": signal.data, "X": signal.time, "fmax": signal.maxFreq})
+
+        if self.folder_path:
+            # Check if a file path was selected
+            df.to_csv(self.folder_path, index=False)
+
+
 
 def main():
     app = QtWidgets.QApplication(sys.argv)
