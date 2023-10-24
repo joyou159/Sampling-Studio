@@ -1,4 +1,3 @@
-
 from PyQt6 import QtCore, QtWidgets
 from PyQt6.QtWidgets import QWidget, QHBoxLayout, QLabel, QFileDialog, QMessageBox, QColorDialog, QListWidgetItem, QMessageBox, QDialogButtonBox, QPushButton
 import wfdb
@@ -50,6 +49,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui.uploadButton.clicked.connect(self.browse)
         self.ui.startLabel.setText("")
         self.ui.endLabel.setText("")
+        self.ui.indicatLabel.setText("")
         self.ui.sampleSlider.valueChanged.connect(self.handle_sliders)
         self.ui.actualRadio.toggled.connect(self.radioToggled)
         self.ui.normalRadio.toggled.connect(self.radioToggled)
@@ -128,6 +128,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
 
     def plot_mixed_signals(self, signal):
+        self.updateCurrentValueLabel()
         if signal:
             self.ui.graph1.clear()
 
@@ -369,11 +370,23 @@ class MainWindow(QtWidgets.QMainWindow):
         else:
             self.ui.normalRadio.setChecked(True)
             self.ui.sampleSlider.setMinimum(self.current_signal.maxFreq)
-            self.ui.sampleSlider.setMaximum(int(self.current_signal.maxFreq * 4)) 
-            self.ui.startLabel.setText("1 x Max freq")
-            self.ui.endLabel.setText(f"4 x Max freq")
-            self.sampleSlider.setSingleStep(int(self.current_signal.maxFreq))
-            self.sampleSlider.setValue(int(self.current_signal.sample_rate))
+            self.ui.sampleSlider.setMaximum(self.current_signal.maxFreq * 4) 
+            self.ui.startLabel.setText("Max freq")
+            self.ui.endLabel.setText(f"4 Max freq")
+            self.ui.sampleSlider.setSingleStep(self.current_signal.maxFreq)
+            # self.sampleSlider.setSingleStep(int(self.current_signal.maxFreq))
+            # self.sampleSlider.setValue(int(self.current_signal.sample_rate))
+
+
+    def updateCurrentValueLabel(self):
+        current_value = self.ui.sampleSlider.value()
+        if self.current_signal.sampling_mode == 0:
+            self.ui.fmaxLabel.setText("4Fmax")
+            self.ui.indicatLabel.setText(f"Current Value: {current_value}")
+        else:
+            self.ui.fmaxLabel.setText("")
+            self.ui.indicatLabel.setText(f"Current Value: {current_value // self.current_signal.maxFreq}F_max")
+             
 
     def radioToggled(self):
         if self.ui.actualRadio.isChecked():

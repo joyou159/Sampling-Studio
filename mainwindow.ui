@@ -1122,7 +1122,7 @@ margin: 0 0 ;</string>
           <property name="sizeHint" stdset="0">
            <size>
             <width>20</width>
-            <height>5</height>
+            <height>13</height>
            </size>
           </property>
          </spacer>
@@ -1182,7 +1182,24 @@ font-weight:10000px;</string>
            </spacer>
           </item>
           <item>
-           <layout class="QVBoxLayout" name="verticalLayout_10">
+           <layout class="QHBoxLayout" name="horizontalLayout_10">
+            <item>
+             <widget class="QLabel" name="indicatLabel">
+              <property name="font">
+               <font>
+                <family>Overpass Medium</family>
+                <pointsize>10</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">color:white;
+margin-top: 3px;</string>
+              </property>
+              <property name="text">
+               <string>0</string>
+              </property>
+             </widget>
+            </item>
             <item>
              <widget class="QLabel" name="fmaxLabel">
               <property name="font">
@@ -1205,6 +1222,10 @@ margin-top: 3px;</string>
               </property>
              </widget>
             </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_10">
             <item>
              <layout class="QVBoxLayout" name="verticalLayout_9">
               <item>
@@ -1251,7 +1272,7 @@ border: 1px solid #3498db; /* Border of the handle when pressed */
               </item>
               <item>
                <layout class="QHBoxLayout" name="horizontalLayout_5">
-                <item>
+                <item alignment="Qt::AlignLeft">
                  <widget class="QLabel" name="startLabel">
                   <property name="font">
                    <font>
@@ -1268,7 +1289,7 @@ margin-top: 3px;</string>
                   </property>
                  </widget>
                 </item>
-                <item>
+                <item alignment="Qt::AlignRight">
                  <widget class="QLabel" name="endLabel">
                   <property name="font">
                    <font>
@@ -1405,7 +1426,7 @@ background-color: #1c2973;
      <x>0</x>
      <y>0</y>
      <width>1325</width>
-     <height>26</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>
