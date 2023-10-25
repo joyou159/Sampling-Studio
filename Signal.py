@@ -40,13 +40,14 @@ class Signal:
     
     def generate_samples(self):
         
+        if self.components:
         # Initialize self.samples as an empty array with the same shape
-        self.data = np.zeros(self.time.shape)
+            self.data = np.zeros(self.time.shape)
 
-        # Generate the signal samples for each component and add them
-        for component in self.components:
-            self.data += component.amplitude * \
-                np.sin(2 * np.pi * component.frequency * self.time + component.phase)
-        
-        self.maxFreq = max([component.frequency for component in self.components])
+            # Generate the signal samples for each component and add them
+            for component in self.components:
+                self.data += component.amplitude * \
+                    np.sin(2 * np.pi * component.frequency * self.time + component.phase)
+            
+            self.maxFreq = max([component.frequency for component in self.components])
         

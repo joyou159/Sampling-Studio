@@ -14,6 +14,9 @@ import random
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QShortcut, QKeySequence, QIcon
 import pandas as pd
+from scipy.io import wavfile
+from scipy.fft import fft
+
 
 
 from Signal import Signal
@@ -28,20 +31,17 @@ class MainWindow(QtWidgets.QMainWindow):
         # Signals objects
 
         self.signals = [] 
-        # self.time = [] why they might be global, while they can be local for the browse method, as said by the Eng.
-        # self.data = []
         self.current_signal = None
         self.preparing_signal = None
-        self.sliders_init = None # handling_sliders (either set or update)
+        self.sliders_init =  False # handling_sliders (either set or update)
 
         self.init_ui()
 
     def init_ui(self):
         # Load the UI Page
         self.ui = uic.loadUi('mainwindow.ui', self)
-        self.ui.graph1.setLimits(xMin = -0.1, xMax =1.1)
-        self.ui.graph2.setLimits(xMin = -0.1, xMax =1.1)
-        self.ui.graph3.setLimits(xMin = -0.1, xMax =1.1)
+
+
 
         self.addComponent.clicked.connect(self.add_component)
         self.ui.GenerateButton.clicked.connect(self.generate_mixer)
@@ -60,7 +60,7 @@ class MainWindow(QtWidgets.QMainWindow):
         
 
     def browse(self):
-        file_filter = "Raw Data (*.csv)"
+        file_filter = "Raw Data (*.csv *.wav)"
         file_path, _ = QtWidgets.QFileDialog.getOpenFileName(
             None, 'Open Signal File', './', filter=file_filter)
         
@@ -73,6 +73,10 @@ class MainWindow(QtWidgets.QMainWindow):
         data = []
         # Extract the file extension (last 3 characters) from the path
         filetype = path[-3:]
+        if filetype == "wav":
+
+            sample_rate, data = wavfile.read(path)
+            time = np.linspace(0, data.shape[0] / sample_rate, data.shape[0])
 
         # Check if the file type is CSV, text (txt), or Excel (xls)
         if filetype in ["csv", "txt", "xls"]:
@@ -95,17 +99,25 @@ class MainWindow(QtWidgets.QMainWindow):
                     
         numbering = len(self.signals) - 1 
         signal = Signal(f"signal {numbering}") 
-        signal.time = time
-        signal.data = data
+        signal.time = time[:1000]
+        signal.data = data[:1000]
+        sample_rate = 1/(time[1] - time[0])
+        signal.maxFreq = int(self.get_max_freq(signal,sample_rate))
+        signal.sample_rate = signal.maxFreq
+        signal.sampling_mode = 0 # by default 
         self.current_signal = signal
-        # self.set_sliders ()
+        self.set_sliders ()
         self.plot_mixed_signals(signal)
+
+    def get_max_freq(self,signal,sample_rate):
+        fft_result = fft(signal.data)
+        frequencies = np.fft.fftfreq(len(fft_result), 1 / sample_rate) # Calculate the frequencies corresponding to the FFT result
+        return max(frequencies)
 
 
     def sample_and_reconstruct(self,signal):
         # signal.sample_rate = 20 # for the sake of testing. 
         self.ui.graph2.clear()
-        signal
 
         # Sample the continuous signal
         sampled_time = np.array([signal.time[i] for i in range(0,len(signal.time),int(len(signal.time)/signal.sample_rate))]) # depends on the signal samples 
@@ -126,7 +138,12 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui.graph2.setLabel('left', "Amplitude")
         self.ui.graph2.setLabel('bottom', "Time")
         self.ui.graph2.plot(signal.time,interpolated_data)
-        self.ui.graph2.setLimits(yMin = min(interpolated_data)-1, yMax =max(interpolated_data)+1)
+        x_min = min(signal.time)
+        x_max = max(signal.time)
+        y_min = min(interpolated_data)
+        y_max = max(interpolated_data)
+
+        self.ui.graph2.setLimits(xMin=x_min-0.3, xMax=x_max+0.3, yMin=y_min-0.3, yMax=y_max+0.3)
 
 
     def plot_mixed_signals(self, signal):
@@ -145,8 +162,13 @@ class MainWindow(QtWidgets.QMainWindow):
 
         # Plot the mixed waveform
             self.ui.graph1.plot(x_data, y_data, name=signal.name)
-            self.ui.graph1.setLimits(yMin = min(y_data)-1, yMax =max(y_data)+1)
-            
+            x_min = min(x_data)
+            x_max = max(x_data)
+            y_min = min(y_data)
+            y_max = max(y_data)
+
+            self.ui.graph1.setLimits(xMin=x_min-0.3, xMax=x_max+0.3, yMin=y_min-0.3, yMax=y_max+0.3)
+                
             # handling plot in graph2
             self.sample_and_reconstruct(signal) 
     
@@ -164,9 +186,6 @@ class MainWindow(QtWidgets.QMainWindow):
             signal = Signal(name)
             self.signals.append(signal)
             self.preparing_signal = signal
-            # what is the meaning of this ??
-            # if len(self.signals) == 1:
-            #     self.current_signal = self.preparing_signal
 
         self.preparing_signal.add_component(component)
         self.add_to_attrList(component)
@@ -327,6 +346,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.current_signal = selected_signal
         self.set_sliders()
         self.ui.graph1.clear()
+        self.ui.graph2.clear()
         self.plot_mixed_signals(self.current_signal)
         if self.current_signal:
             self.add_to_componList()
@@ -334,7 +354,6 @@ class MainWindow(QtWidgets.QMainWindow):
     def delete_from_componList(self, component):
         self.current_signal.delete_component_after_preparing(component)
         self.handle_selected_signal()
-        print(self.current_signal.components)
         if self.current_signal.components == []:
             self.delete_from_signalsList(self.current_signal)
 
@@ -347,6 +366,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.add_to_componList()
 
     def handle_sliders(self):
+        self.updateCurrentValueLabel()
         if self.sliders_init: # the first call is always a set up 
             self.sliders_init = False # suppress the calling 
         else: # any further calling will be adjusting 
@@ -358,7 +378,7 @@ class MainWindow(QtWidgets.QMainWindow):
         
 
     def set_sliders(self):
-        self.sliders_init = True
+        self.sliders_init = True # flag for setting the sliders only, it has nothing to do with update  
         if self.current_signal == None:
             return 
         elif self.current_signal.sampling_mode == 0:
@@ -366,34 +386,43 @@ class MainWindow(QtWidgets.QMainWindow):
             self.ui.actualRadio.setChecked(True)
             self.ui.sampleSlider.setMinimum(1)
             self.ui.sampleSlider.setMaximum(int(self.current_signal.maxFreq * 4)) 
+            self.sampleSlider.setValue(int(self.current_signal.sample_rate)) # handle_sliders is called() due to the connection, and i want to suppress this calling
+            self.sampleSlider.setSingleStep(1)
             self.ui.startLabel.setText("1")
             self.ui.endLabel.setText(str(int(self.current_signal.maxFreq * 4)))
-            self.sampleSlider.setSingleStep(1)
-            self.sampleSlider.setValue(int(self.current_signal.sample_rate)) # handle_sliders is called() due to the connection, and i want to suppress this calling 
         else:
             self.ui.fmaxLabel.setText("")
             self.ui.normalRadio.setChecked(True)
             self.ui.sampleSlider.setMinimum(self.current_signal.maxFreq)
             self.ui.sampleSlider.setMaximum(self.current_signal.maxFreq * 4) 
+            self.ui.sampleSlider.setSingleStep(self.current_signal.maxFreq)
             self.ui.startLabel.setText("Max freq")
             self.ui.endLabel.setText(f"4 Max freq")
-            self.ui.sampleSlider.setSingleStep(self.current_signal.maxFreq)
+        self.sliders_init = False 
 
 
     def updateCurrentValueLabel(self):
         current_value = self.ui.sampleSlider.value()
+        if self.current_signal == None:
+            return 
         if self.current_signal.sampling_mode == 0:
             self.ui.indicatLabel.setText(f"Current Value: {current_value}")
         else:
             self.ui.indicatLabel.setText(f"Current Value: {current_value // self.current_signal.maxFreq}F_max")
+            
 
     def radioToggled(self):
         if self.ui.actualRadio.isChecked():
             self.current_signal.change_sampling_mode(0)
             self.set_sliders()
+            self.updateCurrentValueLabel()
+
+
         else:
             self.current_signal.change_sampling_mode(1)
             self.set_sliders()
+            self.updateCurrentValueLabel()
+
         
 
     def download_signal(self):
