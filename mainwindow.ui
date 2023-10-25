@@ -1003,6 +1003,18 @@ margin-top: 7px;</string>
            </widget>
           </item>
           <item>
+           <widget class="QLabel" name="snrLabel">
+            <property name="styleSheet">
+             <string notr="true">color:white;
+margin-top: 3px;
+</string>
+            </property>
+            <property name="text">
+             <string>0</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QSlider" name="noiseSlider">
             <property name="styleSheet">
              <string notr="true">/* Style for the QSlider */

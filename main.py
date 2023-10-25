@@ -29,7 +29,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.signals = []
         self.current_signal = None
         self.preparing_signal = None
-        self.sliders_init = False  # handling_sliders (either set or update)
+        self.sliders_init1 = False  # handling_sliders (either set or update)
+        self.sliders_init2 = False  # handling_sliders (either set or update)
 
         self.init_ui()
 
@@ -45,7 +46,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui.startLabel.setText("")
         self.ui.endLabel.setText("")
         self.ui.indicatLabel.setText("")
-        self.ui.sampleSlider.valueChanged.connect(self.handle_sliders)
+        self.ui.sampleSlider.valueChanged.connect(self.handle_sample_sliders)
+        self.ui.noiseSlider.valueChanged.connect(self.handle_noise_sliders)
         self.ui.actualRadio.toggled.connect(self.radioToggled)
         self.ui.normalRadio.toggled.connect(self.radioToggled)
         self.ui.downloadButton.clicked.connect(self.download_signal)
@@ -60,7 +62,6 @@ class MainWindow(QtWidgets.QMainWindow):
         if file_path:
             file_name = os.path.basename(file_path)
             self.open_file(file_path, file_name)
-
 
     def open_file(self, path: str, file_name: str):
         # Lists to store time and data
@@ -100,23 +101,30 @@ class MainWindow(QtWidgets.QMainWindow):
                     time.append(time_value)
                     data.append(amplitude_value)
 
-        signal = Signal(file_name[:-4])  # Create a Signal object with the file name without the extension
+        # Create a Signal object with the file name without the extension
+        signal = Signal(file_name[:-4])
 
-        signal.time = time[:1000]  
-        signal.data = data[:1000]  
+        signal.time = time[:1000]
+        signal.data = data[:1000]
 
         sample_rate = 1 / (time[1] - time[0])  # Calculate the sample rate
-        signal.maxFreq = int(self.get_max_freq(signal, sample_rate))  # Calculate the max frequency
+        # Calculate the max frequency
+        signal.maxFreq = int(self.get_max_freq(signal, sample_rate))
         signal.sample_rate = signal.maxFreq
         signal.sampling_mode = 0  # Set the sampling mode to 0 by default
 
-        self.current_signal = signal 
-        self.signals.append(signal)  
-        self.add_to_signalsList(self.current_signal)  # Add the signal to the GUI signals list
-        self.handle_last_index()  # Handle the last index
-        self.set_sliders()  
-        self.plot_mixed_signals(signal)  
+        signal.old_noise = np.zeros(1000)
 
+        self.current_signal = signal
+        self.signals.append(signal)
+        # Add the signal to the GUI signals list
+        self.add_to_signalsList(self.current_signal)
+        self.handle_last_index()  # Handle the last index
+        self.set_sample_sliders()
+        self.set_noise_sliders()
+        self.add_noise(signal)
+        self.plot_mixed_signals(signal)
+        self.plot_error(signal)
 
     def get_max_freq(self, signal, sample_rate):
         fft_result = fft(signal.data)
@@ -146,6 +154,8 @@ class MainWindow(QtWidgets.QMainWindow):
         for i in range(len(sampled_data)):
             interpolated_data += sampled_data[i] * np.sinc(
                 (signal.time - sampled_time[i])/sampling_interval)
+
+        signal.interpolated_data = interpolated_data
 
         # plotting the interpolated signal in graph2
         self.ui.graph2.setLabel('left', "Amplitude")
@@ -186,6 +196,41 @@ class MainWindow(QtWidgets.QMainWindow):
             # handling plot in graph2
             self.sample_and_reconstruct(signal)
 
+    def add_noise(self, signal):
+        signal.data = signal.data - signal.old_noise
+        if signal.snr != 0:
+            signal_avg_power = np.mean(signal.data**2)
+            signal_avg_power_db = 10*np.log(signal_avg_power)
+            noise_db = signal_avg_power_db - signal.snr
+            noise_power = 10**(noise_db/10)
+            noise = np.random.normal(0, np.sqrt(noise_power), len(signal.data))
+            signal.change_noise(noise)
+            signal.data = signal.data + noise
+
+    def plot_error(self, signal):
+        self.updateCurrentValueLabel()
+        if signal:
+            self.ui.graph3.clear()
+
+            # Create a plot item
+            self.ui.graph3.setLabel('left', "Amplitude")
+            self.ui.graph3.setLabel('bottom', "Time")
+
+            # Initialize the time axis (assuming all signals have the same time axis)
+            x_data = signal.time
+
+            y_data = signal.data - signal.interpolated_data
+
+        # Plot the mixed waveform
+            self.ui.graph3.plot(x_data, y_data, name=signal.name)
+            x_min = min(x_data)
+            x_max = max(x_data)
+            y_min = min(y_data)
+            y_max = max(y_data)
+
+            self.ui.graph3.setLimits(
+                xMin=x_min-0.3, xMax=x_max+0.3, yMin=y_min-0.3, yMax=y_max+0.3)
+
     def add_component(self):
         frequency = int(self.ui.freqSpinBox.text())
         amplitude = int(self.ui.ampSpinBox.text())
@@ -204,7 +249,7 @@ class MainWindow(QtWidgets.QMainWindow):
         # self.plot_signal(self.preparing_signal)
 
     def handle_last_index(self):
-        last_row = len(self.signals) - 1
+        last_row = len(self.signals)
         if last_row >= 0:
             self.ui.signalsList.setCurrentRow(last_row)
 
@@ -219,9 +264,12 @@ class MainWindow(QtWidgets.QMainWindow):
         self.handle_last_index()
 
         self.ui.actualRadio.setChecked(True)
-        self.set_sliders()
         self.current_signal = self.signals[-1]
+        self.set_sample_sliders()
+        self.set_noise_sliders()
+        self.add_noise(self.current_signal)
         self.plot_mixed_signals(self.current_signal)
+        self.plot_error(self.current_signal)
 
     def add_to_attrList(self, component):
 
@@ -358,10 +406,13 @@ class MainWindow(QtWidgets.QMainWindow):
     def handle_selected_signal(self):
         selected_signal = self.get_selected_signal()
         self.current_signal = selected_signal
-        self.set_sliders()
+        self.set_sample_sliders()
+        self.set_noise_sliders()
         self.ui.graph1.clear()
         self.ui.graph2.clear()
+        self.add_noise(self.current_signal)
         self.plot_mixed_signals(self.current_signal)
+        self.plot_error(self.current_signal)
         if self.current_signal:
             self.add_to_componList()
 
@@ -379,21 +430,23 @@ class MainWindow(QtWidgets.QMainWindow):
         for component in self.current_signal.components:
             self.add_to_componList()
 
-    def handle_sliders(self):
+    def handle_sample_sliders(self):
         self.updateCurrentValueLabel()
-        if self.sliders_init:  # the first call is always a set up
-            self.sliders_init = False  # suppress the calling
+        if self.sliders_init1:  # the first call is always a set up
+            self.sliders_init1 = False  # suppress the calling
         else:  # any further calling will be adjusting
-            self.update_sliders()
+            self.update_sample_sliders()
 
-    def update_sliders(self):
+    def update_sample_sliders(self):
         self.current_signal.change_sample_rate(
             int(self.ui.sampleSlider.value()))
+        self.add_noise(self.current_signal)
         self.plot_mixed_signals(self.current_signal)
+        self.plot_error(self.current_signal)
 
-    def set_sliders(self):
+    def set_sample_sliders(self):
         # flag for setting the sliders only, it has nothing to do with update
-        self.sliders_init = True
+        self.sliders_init1 = True
         if self.current_signal == None:
             return
         elif self.current_signal.sampling_mode == 0:
@@ -415,33 +468,70 @@ class MainWindow(QtWidgets.QMainWindow):
             self.ui.sampleSlider.setSingleStep(self.current_signal.maxFreq)
             self.ui.startLabel.setText("Max freq")
             self.ui.endLabel.setText(f"4 Max freq")
-        self.sliders_init = False
+        self.sliders_init1 = False
+
+    def handle_noise_sliders(self):
+        print("Slider moved!")
+        self.updateCurrentValueLabel()
+        if self.sliders_init2:  # the first call is always a set up
+            self.sliders_init2 = False  # suppress the calling
+        else:  # any further calling will be adjusting
+            self.update_noise_sliders()
+
+    def update_noise_sliders(self):
+        self.current_signal.change_snr(
+            int(self.ui.noiseSlider.value()))
+        self.add_noise(self.current_signal)
+        self.plot_mixed_signals(self.current_signal)
+        self.plot_error(self.current_signal)
+
+    def set_noise_sliders(self):
+        # flag for setting the sliders only, it has nothing to do with update
+        self.sliders_init2 = True
+        if self.current_signal == None:
+            return
+        else:
+            self.ui.noiseSlider.setMinimum(0)
+            self.ui.noiseSlider.setMaximum(
+                # handle_sliders is called() due to the connection, and i want to suppress this calling
+                int(self.current_signal.snr * 4))
+            self.noiseSlider.setValue(
+                int(self.current_signal.snr))
+            self.noiseSlider.setSingleStep(1)
+        self.sliders_init2 = False
 
     def updateCurrentValueLabel(self):
         current_value = self.ui.sampleSlider.value()
+        snr_value = self.ui.noiseSlider.value()
         if self.current_signal == None:
             return
-        if self.current_signal.sampling_mode == 0:
-            self.ui.indicatLabel.setText(f"Current Value: {current_value}")
         else:
-            self.ui.indicatLabel.setText(
-                f"Current Value: {current_value // self.current_signal.maxFreq}F_max")
+            self.ui.snrLabel.setText(f"SNR Value: {snr_value}")
+            if self.current_signal.sampling_mode == 0:
+                self.ui.indicatLabel.setText(f"Current Value: {current_value}")
+            else:
+                self.ui.indicatLabel.setText(
+                    f"Current Value: {current_value // self.current_signal.maxFreq}F_max")
 
     def radioToggled(self):
-        if self.ui.actualRadio.isChecked():
-            self.current_signal.change_sampling_mode(0)
-            self.set_sliders()
-            self.updateCurrentValueLabel()
-
+        if self.current_signal == None:
+            return
         else:
-            self.current_signal.change_sampling_mode(1)
-            self.set_sliders()
-            self.updateCurrentValueLabel()
+            if self.ui.actualRadio.isChecked():
+                self.current_signal.change_sampling_mode(0)
+                self.set_sample_sliders()
+                self.updateCurrentValueLabel()
+
+            else:
+                self.current_signal.change_sampling_mode(1)
+                self.set_sample_sliders()
+                self.updateCurrentValueLabel()
 
     def download_signal(self):
         self.folder_path, _ = QFileDialog.getSaveFileName(
-            None, 'Save the signal file', None, 'CSV Files (*.csv)')  # Use .csv extension for CSV files
-        
+            # Use .csv extension for CSV files
+            None, 'Save the signal file', None, 'CSV Files (*.csv)')
+
         signal = self.current_signal
         df = pd.DataFrame(
             {"X": signal.time, "Y": signal.data, "fmax": signal.maxFreq})
