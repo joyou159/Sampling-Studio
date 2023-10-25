@@ -398,7 +398,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def download_signal(self):
         self.folder_path, _ = QFileDialog.getSaveFileName(
-            None, 'Save the signal file', None, 'CSV Files (*.csv)')  # Use .csv extension for CSV files
+            None, 'Save the signal file', None, 'CSV Files (*.csv)')  
         
         signal = self.current_signal
         df = pd.DataFrame({"Y": signal.data, "X": signal.time, "fmax": signal.maxFreq})
