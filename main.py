@@ -1,14 +1,11 @@
 from PyQt6 import QtCore, QtWidgets
-from PyQt6.QtWidgets import QWidget, QHBoxLayout, QLabel, QFileDialog, QMessageBox, QColorDialog, QListWidgetItem, QMessageBox, QDialogButtonBox, QPushButton
-import wfdb
+from PyQt6.QtWidgets import QWidget, QHBoxLayout, QLabel, QFileDialog, QMessageBox, QColorDialog, QListWidgetItem, QPushButton
 import numpy as np
 import sys
 from pyqtgraph.Qt import QtCore
 from PyQt6 import QtWidgets, uic
 import pyqtgraph as pg
 import csv
-from fpdf import FPDF
-from pyqtgraph.exporters import ImageExporter
 import os
 import random
 from PyQt6.QtCore import Qt
@@ -66,13 +63,16 @@ class MainWindow(QtWidgets.QMainWindow):
 
 
     def open_file(self, path: str, file_name: str):
-        time = []
-        data = []
+        # Lists to store time and data
+        time = []  # List to store time values
+        data = []  # List to store data values
+        skip_first_row = True  # Initialize a flag to skip the first row
+
         # Extract the file extension (last 3 characters) from the path
         filetype = path[-3:]
 
         if filetype == "wav":
-
+            # Read the WAV file
             sample_rate, data = wavfile.read(path)
             time = np.linspace(0, data.shape[0] / sample_rate, data.shape[0])
 
@@ -80,11 +80,16 @@ class MainWindow(QtWidgets.QMainWindow):
         if filetype in ["csv", "txt", "xls"]:
             # Open the data file for reading ('r' mode)
             with open(path, 'r') as data_file:
-                # Create a CSV reader object with comma as the delimiter
+                # Create a CSV reader object with a comma as the delimiter
                 data_reader = csv.reader(data_file, delimiter=',')
 
                 # Iterate through each row (line) in the data file
                 for row in data_reader:
+                    if skip_first_row:
+                        # Skip the first row
+                        skip_first_row = False
+                        continue
+
                     # Extract the time value from the first column (index 0)
                     time_value = float(row[0])
 
@@ -95,19 +100,23 @@ class MainWindow(QtWidgets.QMainWindow):
                     time.append(time_value)
                     data.append(amplitude_value)
 
-        signal = Signal(file_name[:-4])
-        signal.time = time[:1000]
-        signal.data = data[:1000]
-        sample_rate = 1/(time[1] - time[0])
-        signal.maxFreq = int(self.get_max_freq(signal, sample_rate))
+        signal = Signal(file_name[:-4])  # Create a Signal object with the file name without the extension
+
+        signal.time = time[:1000]  
+        signal.data = data[:1000]  
+
+        sample_rate = 1 / (time[1] - time[0])  # Calculate the sample rate
+        signal.maxFreq = int(self.get_max_freq(signal, sample_rate))  # Calculate the max frequency
         signal.sample_rate = signal.maxFreq
-        signal.sampling_mode = 0  # by default
-        self.current_signal = signal
-        self.signals.append(signal)
-        self.add_to_signalsList(self.current_signal)
-        self.handle_last_index()
-        self.set_sliders()
-        self.plot_mixed_signals(signal)
+        signal.sampling_mode = 0  # Set the sampling mode to 0 by default
+
+        self.current_signal = signal 
+        self.signals.append(signal)  
+        self.add_to_signalsList(self.current_signal)  # Add the signal to the GUI signals list
+        self.handle_last_index()  # Handle the last index
+        self.set_sliders()  
+        self.plot_mixed_signals(signal)  
+
 
     def get_max_freq(self, signal, sample_rate):
         fft_result = fft(signal.data)
@@ -435,7 +444,7 @@ class MainWindow(QtWidgets.QMainWindow):
         
         signal = self.current_signal
         df = pd.DataFrame(
-            {"Y": signal.data, "X": signal.time, "fmax": signal.maxFreq})
+            {"X": signal.time, "Y": signal.data, "fmax": signal.maxFreq})
 
         if self.folder_path:
             # Check if a file path was selected
