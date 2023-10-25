@@ -10,7 +10,7 @@ class Signal:
         self.time = np.linspace(0, 1, 1000)
         self.interpolated_data = None
 
-        self.snr = 0
+        self.snr = 1
         self.old_noise = None
         self.sample_rate = None
         self.maxFreq = None

@@ -133,7 +133,7 @@ class MainWindow(QtWidgets.QMainWindow):
         return max(frequencies)
 
     def sample_and_reconstruct(self, signal):
-        # signal.sample_rate = 20 # for the sake of testing.
+        # signal.sample_rate = 20 # for the sake of testing.sample_ratesnr
         self.ui.graph2.clear()
 
         # Sample the continuous signal
@@ -197,15 +197,28 @@ class MainWindow(QtWidgets.QMainWindow):
             self.sample_and_reconstruct(signal)
 
     def add_noise(self, signal):
+        # Remove old noise from the signal
         signal.data = signal.data - signal.old_noise
+
+        # Calculate the power of the signal
+        signal_power = np.mean(signal.data**2)
+
+        # Calculate the noise power based on SNR
         if signal.snr != 0:
-            signal_avg_power = np.mean(signal.data**2)
-            signal_avg_power_db = 10*np.log(signal_avg_power)
-            noise_db = signal_avg_power_db - signal.snr
-            noise_power = 10**(noise_db/10)
+            # Calculate noise power using SNR in linear scale
+            noise_power = signal_power / (10**(signal.snr / 10))
+
+            # Generate noise with the calculated power
             noise = np.random.normal(0, np.sqrt(noise_power), len(signal.data))
+
+            # Update the signal's noise attribute
             signal.change_noise(noise)
+
+            # Add noise to the signal
             signal.data = signal.data + noise
+        else:
+            # If SNR is 0, no noise is added
+            signal.change_noise(np.zeros(len(signal.data)))
 
     def plot_error(self, signal):
         self.updateCurrentValueLabel()
@@ -456,8 +469,8 @@ class MainWindow(QtWidgets.QMainWindow):
             self.ui.sampleSlider.setMaximum(
                 # handle_sliders is called() due to the connection, and i want to suppress this calling
                 int(self.current_signal.maxFreq * 4))
-            self.sampleSlider.setValue(int(self.current_signal.sample_rate))
-            self.sampleSlider.setSingleStep(1)
+            self.ui.sampleSlider.setValue(int(self.current_signal.sample_rate))
+            self.ui.sampleSlider.setSingleStep(1)
             self.ui.startLabel.setText("1")
             self.ui.endLabel.setText(str(int(self.current_signal.maxFreq * 4)))
         else:
@@ -471,7 +484,6 @@ class MainWindow(QtWidgets.QMainWindow):
         self.sliders_init1 = False
 
     def handle_noise_sliders(self):
-        print("Slider moved!")
         self.updateCurrentValueLabel()
         if self.sliders_init2:  # the first call is always a set up
             self.sliders_init2 = False  # suppress the calling
@@ -495,9 +507,9 @@ class MainWindow(QtWidgets.QMainWindow):
             self.ui.noiseSlider.setMaximum(
                 # handle_sliders is called() due to the connection, and i want to suppress this calling
                 int(self.current_signal.snr * 4))
-            self.noiseSlider.setValue(
+            self.ui.noiseSlider.setValue(
                 int(self.current_signal.snr))
-            self.noiseSlider.setSingleStep(1)
+            self.ui.noiseSlider.setSingleStep(1)
         self.sliders_init2 = False
 
     def updateCurrentValueLabel(self):
