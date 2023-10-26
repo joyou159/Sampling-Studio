@@ -204,12 +204,14 @@ class MainWindow(QtWidgets.QMainWindow):
         signal_power = np.mean(signal.data**2)
 
         # Calculate the noise power based on SNR
-        if signal.snr != 0:
+        if signal.snr < 50:
             # Calculate noise power using SNR in linear scale
             noise_power = signal_power / (10**(signal.snr / 10))
 
             # Generate noise with the calculated power
-            noise = np.random.normal(0, np.sqrt(noise_power), len(signal.data))
+            # Adjust 0.1 to control noise magnitude
+            noise_std_dev = np.sqrt(noise_power) * (70 / signal.snr)
+            noise = np.random.normal(0, noise_std_dev, len(signal.data))
 
             # Update the signal's noise attribute
             signal.change_noise(noise)
@@ -217,7 +219,7 @@ class MainWindow(QtWidgets.QMainWindow):
             # Add noise to the signal
             signal.data = signal.data + noise
         else:
-            # If SNR is 0, no noise is added
+            # If SNR is 0 or negative, no noise is added
             signal.change_noise(np.zeros(len(signal.data)))
 
     def plot_error(self, signal):
@@ -260,11 +262,6 @@ class MainWindow(QtWidgets.QMainWindow):
         self.preparing_signal.add_component(component)
         self.add_to_attrList(component)
         # self.plot_signal(self.preparing_signal)
-
-    def handle_last_index(self):
-        last_row = len(self.signals)
-        if last_row >= 0:
-            self.ui.signalsList.setCurrentRow(last_row)
 
     def generate_mixer(self):
         if self.preparing_signal is not None:
@@ -360,18 +357,37 @@ class MainWindow(QtWidgets.QMainWindow):
                         self.current_signal = None
                         self.ui.componList.clear()
                     else:
-                        self.current_signal = self.signals[0]
-                        self.ui.signalsList.setCurrentRow(0)
+                        self.current_signal = self.signals[-1]
+                        self.handle_last_index()
                 else:
                     self.signals.remove(signal)
         self.update_signalsList()
 
+    def handle_last_index(self):
+        last_row = len(self.signals) - 1
+        if last_row >= 0:
+            self.ui.signalsList.setCurrentRow(last_row)
+
     def update_signalsList(self):
-        current_item = self.ui.signalsList.currentRow()
         self.ui.signalsList.clear()
-        for signal in self.signals:
-            self.add_to_signalsList(signal)
-        self.ui.signalsList.setCurrentRow(current_item)
+        if self.current_signal:
+            for signal in self.signals:
+                self.add_to_signalsList(signal)
+            self.handle_last_index()
+
+    def handle_selected_signal(self):
+        self.ui.graph1.clear()
+        self.ui.graph2.clear()
+        self.ui.graph3.clear()
+        selected_signal = self.get_selected_signal()
+        self.current_signal = selected_signal
+        if self.current_signal:
+            self.set_sample_sliders()
+            self.set_noise_sliders()
+            self.add_noise(self.current_signal)
+            self.plot_mixed_signals(self.current_signal)
+            self.plot_error(self.current_signal)
+            self.add_to_componList()
 
     def add_to_componList(self):
         self.ui.componList.clear()
@@ -415,19 +431,6 @@ class MainWindow(QtWidgets.QMainWindow):
                 for signal in self.signals:
                     if signal.name == signal_name:
                         return signal  # Return the selected signal
-
-    def handle_selected_signal(self):
-        selected_signal = self.get_selected_signal()
-        self.current_signal = selected_signal
-        self.set_sample_sliders()
-        self.set_noise_sliders()
-        self.ui.graph1.clear()
-        self.ui.graph2.clear()
-        self.add_noise(self.current_signal)
-        self.plot_mixed_signals(self.current_signal)
-        self.plot_error(self.current_signal)
-        if self.current_signal:
-            self.add_to_componList()
 
     def delete_from_componList(self, component):
         self.current_signal.delete_component_after_preparing(component)
@@ -503,10 +506,8 @@ class MainWindow(QtWidgets.QMainWindow):
         if self.current_signal == None:
             return
         else:
-            self.ui.noiseSlider.setMinimum(0)
-            self.ui.noiseSlider.setMaximum(
-                # handle_sliders is called() due to the connection, and i want to suppress this calling
-                int(self.current_signal.snr * 4))
+            self.ui.noiseSlider.setMinimum(1)
+            self.ui.noiseSlider.setMaximum(50)
             self.ui.noiseSlider.setValue(
                 int(self.current_signal.snr))
             self.ui.noiseSlider.setSingleStep(1)

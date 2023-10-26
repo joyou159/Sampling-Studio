@@ -24,7 +24,7 @@ class Signal:
         self.sampling_mode = mode_num
 
     def change_noise(self, new_noise):
-        self.noise = new_noise
+        self.old_noise = new_noise
 
     def change_snr(self, new_snr):
         self.snr = new_snr
