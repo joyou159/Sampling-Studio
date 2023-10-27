@@ -1,0 +1,6 @@
+PyQt6==6.4.2
+numpy==1.26.1
+pyqtgraph==0.13.3
+csv==1.0
+pandas==2.1.2
+scipy==1.11.3
