@@ -110,10 +110,8 @@ class MainWindow(QtWidgets.QMainWindow):
         # Create a Signal object with the file name without the extension
         signal = Signal(file_name[:-4])
 
-        signal.time = time[:1000]
         signal.data = data[:1000]
         if frequency:
-            print(frequency)
             signal.maxFreq = frequency
         else:
             sample_rate = 1 / (time[1] - time[0])  # Calculate the sample rate
@@ -392,7 +390,7 @@ class MainWindow(QtWidgets.QMainWindow):
         last_row = len(self.signals) - 1
         if last_row >= 0:
             self.ui.signalsList.setCurrentRow(last_row)
-            self.plot_mixed_signals()
+            self.plot_mixed_signals(self.current_signal)
 
     def update_signalsList(self):
         self.ui.signalsList.clear()
