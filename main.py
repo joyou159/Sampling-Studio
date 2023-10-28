@@ -392,6 +392,7 @@ class MainWindow(QtWidgets.QMainWindow):
         last_row = len(self.signals) - 1
         if last_row >= 0:
             self.ui.signalsList.setCurrentRow(last_row)
+            self.plot_mixed_signals()
 
     def update_signalsList(self):
         self.ui.signalsList.clear()
