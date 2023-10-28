@@ -54,7 +54,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui.graph2.setBackground("transparent")
         self.ui.graph3.setBackground("transparent")
         self.setWindowTitle("Sampling Studio")
-        self.setWindowIcon(QIcon("Icons/thunderbolt-svgrepo-com.png"))  # Replace with the actual path to your icon file
+        self.setWindowIcon(QIcon("Icons/sine-wave.png"))  # Replace with the actual path to your icon file
 
     def browse(self):
         file_filter = "Raw Data (*.csv *.wav)"
