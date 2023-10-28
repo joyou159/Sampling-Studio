@@ -172,12 +172,12 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui.graph2.plot(signal.time, interpolated_data, pen=pen)
         x_min = min(signal.time)
         x_max = max(signal.time)
-        x_range = [x_min, x_max]
+        # x_range = [x_min, x_max]
         y_min = min(interpolated_data)
         y_max = max(interpolated_data)
-        y_range = [y_min - 0.3, y_max + 0.3]
+        # y_range = [y_min - 0.3, y_max + 0.3]
 
-        self.ui.graph2.setRange(xRange=x_range, yRange=y_range)
+        # self.ui.graph2.setRange(xRange=x_range, yRange=y_range)
         self.ui.graph2.setLimits(
             xMin=x_min-0.3, xMax=x_max+0.3, yMin=y_min-0.3, yMax=y_max+0.3)
         self.ui.graph2.autoRange()
@@ -201,12 +201,12 @@ class MainWindow(QtWidgets.QMainWindow):
             self.ui.graph1.plot(x_data, y_data, name=signal.name, pen=pen)
             x_min = min(x_data)
             x_max = max(x_data)
-            x_range = [x_min, x_max]
+            # x_range = [x_min, x_max]
             y_min = min(y_data)
             y_max = max(y_data)
-            y_range = [y_min - 0.3, y_max + 0.3]
+            # y_range = [y_min - 0.3, y_max + 0.3]
 
-            self.ui.graph1.setRange(xRange=x_range, yRange=y_range)
+            # self.ui.graph1.setRange(xRange=x_range, yRange=y_range)
             self.ui.graph1.setLimits(
                 xMin=x_min-0.3, xMax=x_max+0.3, yMin=y_min-0.3, yMax=y_max+0.3)
             self.ui.graph1.autoRange()
@@ -259,12 +259,12 @@ class MainWindow(QtWidgets.QMainWindow):
             self.ui.graph3.plot(x_data, y_data, name=signal.name, pen=pen)
             x_min = min(x_data)
             x_max = max(x_data)
-            x_range = [x_min, x_max]
+            # x_range = [x_min, x_max]
             y_min = min(y_data)
             y_max = max(y_data)
-            y_range = [y_min - 0.3, y_max + 0.3]
+            # y_range = [y_min - 0.3, y_max + 0.3]
 
-            self.ui.graph3.setRange(xRange=x_range, yRange=y_range)
+            # self.ui.graph3.setRange(xRange=x_range, yRange=y_range)
             self.ui.graph3.setLimits(
                 xMin=x_min-0.3, xMax=x_max+0.3, yMin=y_min-0.3, yMax=y_max+0.3)
             self.ui.graph3.autoRange()
