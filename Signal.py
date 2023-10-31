@@ -57,7 +57,7 @@ class Signal:
             # Generate the signal samples for each component and add them
             for component in self.components:
                 self.data += component.amplitude * \
-                    np.sin(2 * np.pi * component.frequency *
+                    np.cos(2 * np.pi * component.frequency *
                            self.time + component.phase)
 
             self.maxFreq = max(

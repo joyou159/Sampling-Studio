@@ -145,11 +145,13 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui.graph2.clear()
 
         # Sample the continuous signal
-        sampled_time = np.array([signal.time[i] for i in range(0, len(signal.time), int(
-            # depends on the signal samples
-            len(signal.time)/signal.sample_rate))])
-        sampled_data = np.array([signal.data[i] for i in range(
-            0, len(signal.data), int(len(signal.data)/signal.sample_rate))])
+        # sampled_time = np.array([signal.time[i] for i in range(0, len(signal.time), int(
+        # depends on the signal samples
+        #     len(signal.time)/signal.sample_rate))])
+        # sampled_data = np.array([signal.data[i] for i in range(
+        #     0, len(signal.data), int(len(signal.data)/signal.sample_rate))])
+        sampled_time = np.linspace(0, 1, signal.sample_rate)
+        sampled_data = np.interp(sampled_time, signal.time, signal.data)
 
         # marking the samples at graph1 plot
         scatter_plot = pg.ScatterPlotItem(
@@ -159,6 +161,7 @@ class MainWindow(QtWidgets.QMainWindow):
         # reconstruct the signal using sinc interpolation
         sampling_interval = 1 / signal.sample_rate
         interpolated_data = np.zeros_like(signal.time)
+
         for i in range(len(sampled_data)):
             interpolated_data += sampled_data[i] * np.sinc(
                 (signal.time - sampled_time[i])/sampling_interval)
