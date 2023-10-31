@@ -10,6 +10,7 @@ from PyQt6.QtGui import QIcon
 import pandas as pd
 from scipy.io import wavfile
 from scipy.fft import fft
+from scipy.signal import butter, lfilter
 
 
 from Signal import Signal
@@ -145,12 +146,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui.graph2.clear()
 
         # Sample the continuous signal
-        # sampled_time = np.array([signal.time[i] for i in range(0, len(signal.time), int(
-        # depends on the signal samples
-        #     len(signal.time)/signal.sample_rate))])
-        # sampled_data = np.array([signal.data[i] for i in range(
-        #     0, len(signal.data), int(len(signal.data)/signal.sample_rate))])
-        sampled_time = np.linspace(0, 1, signal.sample_rate)
+        sampled_time = np.linspace(0, 3, signal.sample_rate * 3)
         sampled_data = np.interp(sampled_time, signal.time, signal.data)
 
         # marking the samples at graph1 plot
@@ -535,7 +531,7 @@ class MainWindow(QtWidgets.QMainWindow):
             return
         else:
             self.ui.noiseSlider.setMinimum(1)
-            self.ui.noiseSlider.setMaximum(50)
+            self.ui.noiseSlider.setMaximum(100)
             self.ui.noiseSlider.setValue(
                 int(self.current_signal.snr))
             self.ui.noiseSlider.setSingleStep(1)

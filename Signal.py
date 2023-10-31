@@ -7,7 +7,7 @@ class Signal:
         self.name = name
         self.components = []
         self.data = []
-        self.time = np.linspace(0, 1, 1000)
+        self.time = np.linspace(0, 3, 1000)
         self.interpolated_data = None
 
         self.snr = 1
@@ -62,3 +62,4 @@ class Signal:
 
             self.maxFreq = max(
                 [component.frequency for component in self.components])
+            print(self.maxFreq)
