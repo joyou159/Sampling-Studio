@@ -62,4 +62,3 @@ class Signal:
 
             self.maxFreq = max(
                 [component.frequency for component in self.components])
-            print(self.maxFreq)
