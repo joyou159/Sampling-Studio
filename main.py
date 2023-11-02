@@ -251,7 +251,9 @@ class MainWindow(QtWidgets.QMainWindow):
             # Initialize the time axis (assuming all signals have the same time axis)
             x_data = signal.time
 
-            y_data = signal.data - signal.interpolated_data
+            original_data = signal.data - signal.old_noise
+
+            y_data = original_data - signal.interpolated_data
 
         # Plot the mixed waveform
             pen = pg.mkPen(color=(64, 92, 245), width=2)
@@ -267,6 +269,39 @@ class MainWindow(QtWidgets.QMainWindow):
             self.ui.graph3.setLimits(
                 xMin=x_min-0.3, xMax=x_max+0.3, yMin=y_min-0.3, yMax=y_max+0.3)
             self.ui.graph3.autoRange()
+            
+    def handle_real_time(self):
+        self.graph1.clear()
+        self.graph2.clear()
+        self.graph3.clear()
+        if self.preparing_signal !=None :
+            
+            self.preparing_signal.generate_samples()
+
+            
+            x_data = self.preparing_signal.time
+
+            y_data = self.preparing_signal.data
+
+        # Plot the mixed waveform
+            pen = pg.mkPen(color=(64, 92, 245), width=2)
+            self.ui.graph1.plot(x_data, y_data, name=self.preparing_signal.name, pen=pen)
+            x_min = min(x_data)
+            x_max = max(x_data)
+            # x_range = [x_min, x_max]
+            y_min = min(y_data)
+            y_max = max(y_data)
+            # y_range = [y_min - 0.3, y_max + 0.3]
+
+            # self.ui.graph1.setRange(xRange=x_range, yRange=y_range)
+            self.ui.graph1.setLimits(
+                xMin=x_min-0.3, xMax=x_max+0.3, yMin=y_min-0.3, yMax=y_max+0.3)
+            self.ui.graph1.autoRange()
+            self.graph1.plot(self.preparing_signal.time,self.preparing_signal.data)
+            # self.plot_signal(self.preparing_signal
+            
+
+        
 
     def add_component(self):
         frequency = int(self.ui.freqSpinBox.text())
@@ -278,15 +313,17 @@ class MainWindow(QtWidgets.QMainWindow):
         if self.preparing_signal is None:
             name = f"Signal {len(self.signals)}"
             signal = Signal(name)
-            self.signals.append(signal)
+            
             self.preparing_signal = signal
 
         self.preparing_signal.add_component(component)
         self.add_to_attrList(component)
-        # self.plot_signal(self.preparing_signal)
-
+        self.handle_real_time()
+        
+        
     def generate_mixer(self):
         if self.preparing_signal is not None:
+            self.signals.append(self.preparing_signal)
             self.preparing_signal.generate_signal()
             self.ui.attrList.clear()
             self.add_to_signalsList(self.preparing_signal)
@@ -337,12 +374,20 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def delete_from_attrList(self, component):
         self.preparing_signal.delete_component_during_preparing(component)
-        self.update_attrList()
+        if self.preparing_signal.components == []:
+            self.preparing_signal = None
+            self.update_attrList()        
+
+        else:
+            self.update_attrList()        
+        self.handle_real_time()
+
 
     def update_attrList(self):
         self.ui.attrList.clear()
-        for component in self.preparing_signal.components:
-            self.add_to_attrList(component)
+        if self.preparing_signal !=None:
+            for component in self.preparing_signal.components:
+                self.add_to_attrList(component)
 
     def add_to_signalsList(self, signal):
 
