@@ -276,34 +276,9 @@ class MainWindow(QtWidgets.QMainWindow):
                 xMin=x_min-0.3, xMax=x_max+0.3, yMin=y_min-0.3, yMax=y_max+0.3)
             self.ui.graph3.autoRange()
             
-    def handle_real_time(self):
-        self.graph1.clear()
-        self.graph2.clear()
-        self.graph3.clear()
-        if self.preparing_signal !=None :
-            
-            self.preparing_signal.generate_points()
+        
+        
 
-            
-            x_data = self.preparing_signal.time
-
-            y_data = self.preparing_signal.data
-
-        # Plot the mixed waveform
-            pen = pg.mkPen(color=(64, 92, 245), width=2)
-            self.ui.graph1.plot(x_data, y_data, name=self.preparing_signal.name, pen=pen)
-
-            x_min = min(x_data)
-            x_max = max(x_data)
-            y_min = min(y_data)
-            y_max = max(y_data)
-            
-            self.ui.graph1.setLimits(
-                xMin=x_min-0.3, xMax=x_max+0.3, yMin=y_min-0.3, yMax=y_max+0.3)
-            
-            self.ui.graph1.autoRange()
-          
-            
     def add_component(self):
         frequency = int(self.ui.freqSpinBox.text())
         amplitude = int(self.ui.ampSpinBox.text())
@@ -320,27 +295,6 @@ class MainWindow(QtWidgets.QMainWindow):
         self.preparing_signal.add_component(component)
         self.add_to_attrList(component)
         self.handle_real_time()
-        
-        
-    def generate_mixer(self):
-        if self.preparing_signal is not None:
-            self.signals.append(self.preparing_signal)
-            self.preparing_signal.generate_signal()
-            self.ui.attrList.clear()
-            self.add_to_signalsList(self.preparing_signal)
-            self.preparing_signal = None
-
-        # Select the last row in signalsList
-        self.current_signal = self.signals[-1]
-        self.handle_last_index()
-
-        self.ui.actualRadio.setChecked(True)
-        self.set_sample_sliders()
-        self.set_noise_sliders()
-        self.add_noise(self.current_signal)
-        self.plot_mixed_signals(self.current_signal)
-        self.plot_error(self.current_signal)
-
 
     def add_to_attrList(self, component):
 
@@ -391,6 +345,52 @@ class MainWindow(QtWidgets.QMainWindow):
             for component in self.preparing_signal.components:
                 self.add_to_attrList(component)
 
+    def handle_real_time(self):
+        self.graph1.clear()
+        self.graph2.clear()
+        self.graph3.clear()
+        if self.preparing_signal !=None :
+            
+            self.preparing_signal.generate_points()
+
+            
+            x_data = self.preparing_signal.time
+
+            y_data = self.preparing_signal.data
+
+        # Plot the mixed waveform
+            pen = pg.mkPen(color=(64, 92, 245), width=2)
+            self.ui.graph1.plot(x_data, y_data, name=self.preparing_signal.name, pen=pen)
+
+            x_min = min(x_data)
+            x_max = max(x_data)
+            y_min = min(y_data)
+            y_max = max(y_data)
+            
+            self.ui.graph1.setLimits(
+                xMin=x_min-0.3, xMax=x_max+0.3, yMin=y_min-0.3, yMax=y_max+0.3)
+            
+            self.ui.graph1.autoRange()
+            
+    def generate_mixer(self):
+        if self.preparing_signal is not None:
+            self.signals.append(self.preparing_signal)
+            self.preparing_signal.generate_signal()
+            self.ui.attrList.clear()
+            self.add_to_signalsList(self.preparing_signal)
+            self.preparing_signal = None
+
+        # Select the last row in signalsList
+        self.current_signal = self.signals[-1]
+        self.handle_last_index()
+
+        self.ui.actualRadio.setChecked(True)
+        self.set_sample_sliders()
+        self.set_noise_sliders()
+        self.add_noise(self.current_signal)
+        self.plot_mixed_signals(self.current_signal)
+        self.plot_error(self.current_signal)
+        
 
     def add_to_signalsList(self, signal):
 
