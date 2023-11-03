@@ -282,7 +282,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.graph3.clear()
         if self.preparing_signal !=None :
             
-            self.preparing_signal.generate_samples()
+            self.preparing_signal.generate_points()
 
             
             x_data = self.preparing_signal.time

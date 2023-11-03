@@ -36,18 +36,18 @@ class Signal:
         if component in self.components:
             self.components.remove(component)
         # re-generating the data
-        self.generate_samples()
+        self.generate_points()
 
     def delete_component_during_preparing(self, component):
         if component in self.components:
             self.components.remove(component)
 
     def generate_signal(self):
-        self.generate_samples()
+        self.generate_points()
         self.sample_rate = self.maxFreq
         self.sampling_mode = 0  # by default
 
-    def generate_samples(self):
+    def generate_points(self):
         if self.components != []:
             # Initialize self.samples as an empty array with the same shape
             self.data = np.zeros(self.time.shape)
