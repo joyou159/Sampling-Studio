@@ -58,13 +58,11 @@ class MainWindow(QtWidgets.QMainWindow):
         # Replace with the actual path to your icon file
         self.setWindowIcon(QIcon("Icons/sine-wave.png"))
 
-
     def handle_last_index(self):
         last_row = len(self.signals) - 1
         if last_row >= 0:
             self.ui.signalsList.setCurrentRow(last_row)
-            self.plot_mixed_signals(self.current_signal)   
-
+            self.plot_mixed_signals(self.current_signal)
 
     def browse(self):
         file_filter = "Raw Data (*.csv *.wav)"
@@ -74,7 +72,6 @@ class MainWindow(QtWidgets.QMainWindow):
         if file_path:
             file_name = os.path.basename(file_path)
             self.open_file(file_path, file_name)
-
 
     def open_file(self, path: str, file_name: str):
         # Lists to store time and data
@@ -176,15 +173,13 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui.graph2.plot(signal.time, interpolated_data, pen=pen)
         x_min = min(signal.time)
         x_max = max(signal.time)
-        # x_range = [x_min, x_max]
-        y_min = min(interpolated_data)
-        y_max = max(interpolated_data)
-        # y_range = [y_min - 0.3, y_max + 0.3]
+        y_min = min(signal.data)
+        y_max = max(signal.data)
 
         # self.ui.graph2.setRange(xRange=x_range, yRange=y_range)
+        self.ui.graph2.autoRange()
         self.ui.graph2.setLimits(
             xMin=x_min-0.3, xMax=x_max+0.3, yMin=y_min+0.3, yMax=y_max+0.3)
-        self.ui.graph2.autoRange()
 
     def plot_mixed_signals(self, signal):
         if signal:
@@ -275,9 +270,6 @@ class MainWindow(QtWidgets.QMainWindow):
             self.ui.graph3.setLimits(
                 xMin=x_min-0.3, xMax=x_max+0.3, yMin=y_min-0.3, yMax=y_max+0.3)
             self.ui.graph3.autoRange()
-            
-        
-        
 
     def add_component(self):
         frequency = int(self.ui.freqSpinBox.text())
@@ -289,7 +281,7 @@ class MainWindow(QtWidgets.QMainWindow):
         if self.preparing_signal is None:
             name = f"Signal {len(self.signals)}"
             signal = Signal(name)
-            
+
             self.preparing_signal = signal
 
         self.preparing_signal.add_component(component)
@@ -332,16 +324,15 @@ class MainWindow(QtWidgets.QMainWindow):
         self.preparing_signal.delete_component_during_preparing(component)
         if self.preparing_signal.components == []:
             self.preparing_signal = None
-            self.update_attrList()        
+            self.update_attrList()
 
         else:
-            self.update_attrList()        
+            self.update_attrList()
         self.handle_real_time()
-
 
     def update_attrList(self):
         self.ui.attrList.clear()
-        if self.preparing_signal !=None:
+        if self.preparing_signal != None:
             for component in self.preparing_signal.components:
                 self.add_to_attrList(component)
 
@@ -349,29 +340,29 @@ class MainWindow(QtWidgets.QMainWindow):
         self.graph1.clear()
         self.graph2.clear()
         self.graph3.clear()
-        if self.preparing_signal !=None :
-            
+        if self.preparing_signal != None:
+
             self.preparing_signal.generate_points()
 
-            
             x_data = self.preparing_signal.time
 
             y_data = self.preparing_signal.data
 
         # Plot the mixed waveform
             pen = pg.mkPen(color=(64, 92, 245), width=2)
-            self.ui.graph1.plot(x_data, y_data, name=self.preparing_signal.name, pen=pen)
+            self.ui.graph1.plot(
+                x_data, y_data, name=self.preparing_signal.name, pen=pen)
 
             x_min = min(x_data)
             x_max = max(x_data)
             y_min = min(y_data)
             y_max = max(y_data)
-            
+
             self.ui.graph1.setLimits(
                 xMin=x_min-0.3, xMax=x_max+0.3, yMin=y_min-0.3, yMax=y_max+0.3)
-            
+
             self.ui.graph1.autoRange()
-            
+
     def generate_mixer(self):
         if self.preparing_signal is not None:
             self.signals.append(self.preparing_signal)
@@ -390,7 +381,6 @@ class MainWindow(QtWidgets.QMainWindow):
         self.add_noise(self.current_signal)
         self.plot_mixed_signals(self.current_signal)
         self.plot_error(self.current_signal)
-        
 
     def add_to_signalsList(self, signal):
 
@@ -418,7 +408,6 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui.signalsList.addItem(item)
         self.ui.signalsList.setItemWidget(item, custom_widget)
 
-
     def delete_from_signalsList(self, signal):
         for sig in self.signals:
             if signal == sig:
@@ -434,15 +423,12 @@ class MainWindow(QtWidgets.QMainWindow):
                     self.signals.remove(signal)
         self.update_signalsList()
 
-
-
     def update_signalsList(self):
         self.ui.signalsList.clear()
         if self.current_signal:
             for signal in self.signals:
                 self.add_to_signalsList(signal)
             self.handle_last_index()
-
 
     def handle_selected_signal(self):
         self.ui.graph1.clear()
@@ -457,7 +443,6 @@ class MainWindow(QtWidgets.QMainWindow):
             self.plot_mixed_signals(self.current_signal)
             self.plot_error(self.current_signal)
             self.add_to_componList()
-
 
     def add_to_componList(self):
         self.ui.componList.clear()
@@ -502,7 +487,6 @@ class MainWindow(QtWidgets.QMainWindow):
                     if signal.name == signal_name:
                         return signal  # Return the selected signal
 
-
     def delete_from_componList(self, component):
         self.current_signal.delete_component_after_preparing(component)
         self.handle_selected_signal()
@@ -512,10 +496,9 @@ class MainWindow(QtWidgets.QMainWindow):
         else:
             self.update_componList()
 
-
     def update_componList(self):
         self.ui.componList.clear()
-        
+
         self.add_to_componList()
 
     def handle_sample_sliders(self):
