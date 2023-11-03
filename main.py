@@ -148,9 +148,10 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui.graph2.clear()
 
         # Sample the continuous signal
-        sampled_time = np.linspace(0, 3, signal.sample_rate * 3)
+        # sampled_time = np.linspace(0, 3, signal.sample_rate * 3)
+        sampled_time = np.arange(
+            0, 3.00000001, 1/signal.sample_rate)  # the upper limit is included
         sampled_data = np.interp(sampled_time, signal.time, signal.data)
-
         # marking the samples at graph1 plot
         scatter_plot = pg.ScatterPlotItem(
             x=sampled_time, y=sampled_data, pen='r', symbol='x', size=10)
@@ -160,7 +161,7 @@ class MainWindow(QtWidgets.QMainWindow):
         sampling_interval = 1 / signal.sample_rate
         interpolated_data = np.zeros_like(signal.time)
 
-        for i in range(len(sampled_data)):
+        for i in range(len(sampled_data)):  # convolution
             interpolated_data += sampled_data[i] * np.sinc(
                 (signal.time - sampled_time[i])/sampling_interval)
 
@@ -171,15 +172,15 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui.graph2.setLabel('bottom', "Time")
         pen = pg.mkPen(color=(64, 92, 245), width=2)
         self.ui.graph2.plot(signal.time, interpolated_data, pen=pen)
-        x_min = min(signal.time)
-        x_max = max(signal.time)
-        y_min = min(signal.data)
-        y_max = max(signal.data)
 
-        # self.ui.graph2.setRange(xRange=x_range, yRange=y_range)
-        self.ui.graph2.autoRange()
-        self.ui.graph2.setLimits(
-            xMin=x_min-0.3, xMax=x_max+0.3, yMin=y_min+0.3, yMax=y_max+0.3)
+        # y_min = min(signal.data)
+        # y_max = max(signal.data)
+        # x_min = min(signal.time)
+        # x_max = max(signal.time)
+
+        # self.ui.graph2.setLimits(
+        #     xMin=x_min-0.3, xMax=x_max+0.3, yMin=y_min+0.3, yMax=y_max+0.3)
+        # self.ui.graph2.autoRange()
 
     def plot_mixed_signals(self, signal):
         if signal:
@@ -548,7 +549,9 @@ class MainWindow(QtWidgets.QMainWindow):
         else:  # any further calling will be adjusting
             self.update_noise_sliders()
 
+
 # #405cf5
+
     def update_noise_sliders(self):
         self.current_signal.change_snr(
             int(self.ui.noiseSlider.value()))
