@@ -58,6 +58,14 @@ class MainWindow(QtWidgets.QMainWindow):
         # Replace with the actual path to your icon file
         self.setWindowIcon(QIcon("Icons/sine-wave.png"))
 
+
+    def handle_last_index(self):
+        last_row = len(self.signals) - 1
+        if last_row >= 0:
+            self.ui.signalsList.setCurrentRow(last_row)
+            self.plot_mixed_signals(self.current_signal)   
+
+
     def browse(self):
         file_filter = "Raw Data (*.csv *.wav)"
         file_path, _ = QtWidgets.QFileDialog.getOpenFileName(
@@ -67,12 +75,12 @@ class MainWindow(QtWidgets.QMainWindow):
             file_name = os.path.basename(file_path)
             self.open_file(file_path, file_name)
 
+
     def open_file(self, path: str, file_name: str):
         # Lists to store time and data
         time = []  # List to store time values
         data = []  # List to store data values
         frequency = 0
-        skip_first_row = True  # Initialize a flag to skip the first row
 
         # Extract the file extension (last 3 characters) from the path
         filetype = path[-3:]
@@ -88,13 +96,10 @@ class MainWindow(QtWidgets.QMainWindow):
             with open(path, 'r') as data_file:
                 # Create a CSV reader object with a comma as the delimiter
                 data_reader = csv.reader(data_file, delimiter=',')
+                next(data_reader)
 
                 # Iterate through each row (line) in the data file
                 for row in data_reader:
-                    if skip_first_row:
-                        # Skip the first row
-                        skip_first_row = False
-                        continue
 
                     # Extract the time value from the first column (index 0)
                     time_value = float(row[0])
@@ -178,11 +183,10 @@ class MainWindow(QtWidgets.QMainWindow):
 
         # self.ui.graph2.setRange(xRange=x_range, yRange=y_range)
         self.ui.graph2.setLimits(
-            xMin=x_min-0.3, xMax=x_max+0.3, yMin=y_min-0.3, yMax=y_max+0.3)
+            xMin=x_min-0.3, xMax=x_max+0.3, yMin=y_min+0.3, yMax=y_max+0.3)
         self.ui.graph2.autoRange()
 
     def plot_mixed_signals(self, signal):
-        self.updateCurrentValueLabel()
         if signal:
             self.ui.graph1.clear()
 
@@ -212,6 +216,8 @@ class MainWindow(QtWidgets.QMainWindow):
 
             # handling plot in graph2
             self.sample_and_reconstruct(signal)
+
+        self.updateCurrentValueLabel()
 
     def add_noise(self, signal):
         # Remove old noise from the signal
@@ -286,23 +292,18 @@ class MainWindow(QtWidgets.QMainWindow):
         # Plot the mixed waveform
             pen = pg.mkPen(color=(64, 92, 245), width=2)
             self.ui.graph1.plot(x_data, y_data, name=self.preparing_signal.name, pen=pen)
+
             x_min = min(x_data)
             x_max = max(x_data)
-            # x_range = [x_min, x_max]
             y_min = min(y_data)
             y_max = max(y_data)
-            # y_range = [y_min - 0.3, y_max + 0.3]
-
-            # self.ui.graph1.setRange(xRange=x_range, yRange=y_range)
+            
             self.ui.graph1.setLimits(
                 xMin=x_min-0.3, xMax=x_max+0.3, yMin=y_min-0.3, yMax=y_max+0.3)
-            self.ui.graph1.autoRange()
-            self.graph1.plot(self.preparing_signal.time,self.preparing_signal.data)
-            # self.plot_signal(self.preparing_signal
             
-
-        
-
+            self.ui.graph1.autoRange()
+          
+            
     def add_component(self):
         frequency = int(self.ui.freqSpinBox.text())
         amplitude = int(self.ui.ampSpinBox.text())
@@ -330,15 +331,16 @@ class MainWindow(QtWidgets.QMainWindow):
             self.preparing_signal = None
 
         # Select the last row in signalsList
+        self.current_signal = self.signals[-1]
         self.handle_last_index()
 
         self.ui.actualRadio.setChecked(True)
-        self.current_signal = self.signals[-1]
         self.set_sample_sliders()
         self.set_noise_sliders()
         self.add_noise(self.current_signal)
         self.plot_mixed_signals(self.current_signal)
         self.plot_error(self.current_signal)
+
 
     def add_to_attrList(self, component):
 
@@ -389,6 +391,7 @@ class MainWindow(QtWidgets.QMainWindow):
             for component in self.preparing_signal.components:
                 self.add_to_attrList(component)
 
+
     def add_to_signalsList(self, signal):
 
         text = signal.name
@@ -415,6 +418,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui.signalsList.addItem(item)
         self.ui.signalsList.setItemWidget(item, custom_widget)
 
+
     def delete_from_signalsList(self, signal):
         for sig in self.signals:
             if signal == sig:
@@ -430,11 +434,7 @@ class MainWindow(QtWidgets.QMainWindow):
                     self.signals.remove(signal)
         self.update_signalsList()
 
-    def handle_last_index(self):
-        last_row = len(self.signals) - 1
-        if last_row >= 0:
-            self.ui.signalsList.setCurrentRow(last_row)
-            self.plot_mixed_signals(self.current_signal)
+
 
     def update_signalsList(self):
         self.ui.signalsList.clear()
@@ -442,6 +442,7 @@ class MainWindow(QtWidgets.QMainWindow):
             for signal in self.signals:
                 self.add_to_signalsList(signal)
             self.handle_last_index()
+
 
     def handle_selected_signal(self):
         self.ui.graph1.clear()
@@ -456,6 +457,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.plot_mixed_signals(self.current_signal)
             self.plot_error(self.current_signal)
             self.add_to_componList()
+
 
     def add_to_componList(self):
         self.ui.componList.clear()
@@ -500,6 +502,7 @@ class MainWindow(QtWidgets.QMainWindow):
                     if signal.name == signal_name:
                         return signal  # Return the selected signal
 
+
     def delete_from_componList(self, component):
         self.current_signal.delete_component_after_preparing(component)
         self.handle_selected_signal()
@@ -509,10 +512,11 @@ class MainWindow(QtWidgets.QMainWindow):
         else:
             self.update_componList()
 
+
     def update_componList(self):
         self.ui.componList.clear()
-        for component in self.current_signal.components:
-            self.add_to_componList()
+        
+        self.add_to_componList()
 
     def handle_sample_sliders(self):
         self.updateCurrentValueLabel()
