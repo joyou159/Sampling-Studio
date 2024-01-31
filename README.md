@@ -35,6 +35,13 @@ The core of the application is represented by the `MainWindow` class, which exte
 - **Graphical Visualization**: Signals, reconstructed signals, and error plots are displayed in graphical form using PyQtGraph.
 
 - **Interactive Elements**: Users can interact with the GUI through buttons, sliders, and radio buttons to control various aspects of signal processing and visualization.
+## Demo
+- **Top Graph**: Original signal
+- **Middle Graph**: Reconstructed signal
+- **Bottom Graph**: Difference error between Original signal and Reconstructed signal
+
+https://github.com/MohamedMandour10/Sampling-Studio/assets/115044826/e29edee7-b996-44d4-b918-eb997573653b
+
 
 ## Getting Started
 
@@ -47,4 +54,33 @@ The core of the application is represented by the `MainWindow` class, which exte
 
    ```bash
    python main.py
+
+## Contributors <a name = "Contributors"></a>
+<table>
+  <tr>
+    <td align="center">
+    <a href="https://github.com/MohamedMandour10" target="_black">
+    <img src="https://avatars.githubusercontent.com/u/115044826?v=4" width="150px;" alt="Mohamed Elsayed Eid"/>
+    <br />
+    <sub><b>Mohamed Elsayed Eid</b></sub></a>
+    </td>
+    <td align="center">
+    <a href="https://github.com/mohamedmosilhy" target="_black">
+    <img src="https://avatars.githubusercontent.com/u/93820559?v=4" width="150px;" alt="mohamed mosilhy"/>
+    <br />
+    <sub><b>Mohamed Mosilhy</b></sub></a>
+    </td>
+    <td align="center">
+    <a href="https://github.com/MahmoudMagdy404" target="_black">
+    <img src="https://avatars.githubusercontent.com/u/83336074?v=4" width="150px;" alt="Mahmoud Magdy"/>
+    <br />
+    <sub><b>Mahmoud Magdy</b></sub></a>
+    </td>
+    <td align="center">
+    <a href="https://github.com/joyou159" target="_black">
+    <img src="https://avatars.githubusercontent.com/u/85418161?v=4" width="150px;" alt="Youssef Ahmed"/>
+    <br />
+    <sub><b>Youssef Ahmed</b></sub></a>
+    </td>
+      </tr>
 
