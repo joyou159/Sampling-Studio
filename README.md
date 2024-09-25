@@ -3,39 +3,33 @@
 
 ## Overview
 
-This Python application is designed for signal processing and analysis. It provides a graphical user interface (GUI) built with PyQt6 and utilizes various signal processing techniques and features. Users can load, process, and analyze signal data from different sources, as well as manipulate and visualize signals with components. The application includes features for handling noise, signal reconstruction, and more.
+Welcome to our user-friendly desktop application, designed to vividly illustrate the core concepts of signal sampling and recovery while emphasizing the critical importance of adhering to the Nyquist rate. This application provides an intuitive interface for real-time signal composition using sinusoidals and offers the flexibility of uploading custom signal files for personalized analysis.
+## Key Features
 
-## Features
+### Real-time Signal Composition
 
-### Main Window Class
+- **Dynamic Signal Composition**: Users can experiment with various sinusoidal components in real-time, gaining a hands-on understanding of signal composition.
 
-The core of the application is represented by the `MainWindow` class, which extends `QtWidgets.QMainWindow`. This class serves as the main user interface for the application.
+- **File Upload Capability**: Easily upload custom signal files, extending the versatility of the application for personalized analysis.
 
-### Signal Management
+### Signal Sampling and Reconstruction
 
-- **Loading Signals**: Users can load signal data from various file types, including CSV and WAV files. The application can read and parse the data, making it available for further analysis.
+- **Nyquist Rate Validation**: The application demonstrates the significance of the Nyquist rate in maintaining signal fidelity during real-time signal sampling and subsequent reconstruction.
 
-- **Adding Components**: Signals can be composed of multiple components, which users can add and configure. Components include frequency, amplitude, and phase parameters.
+- **Whittaker–Shannon Interpolation**: Utilize the Whittaker–Shannon interpolation formula for accurate signal reconstruction, providing a practical insight into signal processing.
 
-- **Signal Generation**: The application allows users to generate mixed signals by specifying and combining components. It supports the generation of signals with added noise based on signal-to-noise ratio (SNR).
+### Simulation of Real-world Scenarios
 
-- **Signal Visualization**: Loaded signals and generated mixed signals are plotted for visualization. Users can select and analyze specific signals using the GUI.
+- **White Noise Addition**: Simulate real-world challenges by adding white noise to signals. Gain insights into the impact of background noise on signal recovery.
 
-### Signal Processing
+### Error Analysis
 
-- **Signal Sampling**: Users can adjust the sampling rate, either based on the actual signal frequency or by specifying a custom rate. The application provides options for subsampling and signal reconstruction.
+- **Interpolation Error Computation**: Quantitatively assess the accuracy of signal reconstruction by comparing the actual signal with the reconstructed one.
 
-- **Signal Reconstruction**: The application supports signal reconstruction using sinc interpolation, allowing users to see the effects of subsampling on the signal.
+### Streamlined Exploration
 
-- **Signal Error Analysis**: Users can visualize the difference between the original and reconstructed signals to analyze the quality of the reconstruction.
+- **User-friendly Interface**: Navigate through the application effortlessly, with a streamlined design focused on an effective exploration of signal sampling and recovery concepts.
 
-- **Noise Handling**: Noise can be added to signals based on the specified SNR. The application calculates and adds noise to the signal data, allowing users to observe the impact on signal quality.
-
-### User Interface
-
-- **Graphical Visualization**: Signals, reconstructed signals, and error plots are displayed in graphical form using PyQtGraph.
-
-- **Interactive Elements**: Users can interact with the GUI through buttons, sliders, and radio buttons to control various aspects of signal processing and visualization.
 ## Demo
 - **Top Graph**: Original signal
 - **Middle Graph**: Reconstructed signal
